@@ -1,0 +1,9 @@
+public class CustomPreferenceFragment
+  extends PreferenceFragment {
+
+  @Override
+  public void onAttach(Context context) {
+    reinitializeData(context);
+    super.onAttach(context);
+  }
+}

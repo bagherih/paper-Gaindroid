@@ -1,0 +1,25 @@
+\begin{algorithm}[t] \footnotesize \relax 
+\caption{Detecting callback mismatches in an Android application}
+\label{alg:callback-mismatch}
+\begin{algorithmic}[1]
+\Procedure{DetectCallbackMismatch}{app}
+\newline\Comment{\rlap{\textbf{Input:}}\phantom{\textbf{Output:}} A decompiled Android APK}
+\newline\Comment{\textbf{Output:} A list of detected mismatches}
+    \State{\rlap{mismatches}\phantom{maxSdkVersion} $\gets\emptyset$}
+    \State{\rlap{minSdkVersion}\phantom{maxSdkVersion} $\gets$ \Call{GetMinSdkVersion}{app}}
+    \State{maxSdkVersion $\gets$ \Call{GetMaxSdkVersion}{app}}
+    \State{\rlap{versions}\phantom{maxSdkVersion} $\gets$ (minSdkVersion..maxSdkVersion)}
+    \State{\rlap{callGraph}\phantom{maxSdkVersion} $\gets$ \Call{BuildCallGraph}{app}}
+    \ForEachIn{method}{callGraph}
+        \If{\Call{IsApiOverride}{method}}
+            \ForEachIn{version}{versions}
+                \If{\Call{ApiNotFound}{method, version}}
+                    \State{mismatches $\gets$ mismatches $\cup$ (method, version)}
+                \EndIf
+            \EndFor
+        \EndIf
+    \EndFor
+    \State{\Return{mismatches}}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}

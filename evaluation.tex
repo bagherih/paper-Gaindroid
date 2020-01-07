@@ -1,0 +1,212 @@
+\def \apitotalALL {68,268}
+\def \apctotalALL {2,115}
+
+\def \apicountALL {1,471}
+\def \apiprcntALL {41.19\%}
+\def \apicountZOO {878}
+\def \apicountFDR {593}
+
+\def \apccountALL {761}
+\def \apcprcntALL {20.05\%}
+\def \apccountZOO {464}
+\def \apccountFDR {252}
+
+\def \andzooct {2,180}
+\def \fdroidct {1,391}
+
+\def \prqcount {224}
+\def \prqprcnt {12.34\%}
+\def \prqtotal {1,815}
+
+\def \prvcount {1,206}
+\def \prvprcnt {68.68\%}
+\def \prvtotal {1,756}
+
+\def \prmcount {1,430}
+\def \prmprcnt {40.04\%}
+
+\def \rqoneapps {19}
+
+\section{Experimental Evaluation}
+\label{sec-eval}
+
+This section presents the experimental evaluation of~\@approach. 
+%\textcolor{blue}{
+We have implemented \@approach's static analysis capability on top of the \textsc{Jitana} framework~\cite{tsutano2017efficient}, %\textsc{Jitana} is a high-performance hybrid analysis tool for Android. It works directly on Dalvik executable (dex) files contained in each APK.
+which is hybrid analysis tool for Android.
+We also used \textsc{APKTool} \cite{apktool} for %reverse engineering Android APK files and 
+extracting apps' manifest files.
+As a result, our approach implementation only requires the availability of Android executable files, and not the original source code. \@approach, thus, can be used not only by developers, but also by end-users as well as third-party reviewers to assess the compatibility of their mobile apps.
+%, which enables our tool to work on non-open source applications whose APKs can be found online. We also need to decompile the APK file to extract the manifest file, and to that end we use \textsc{APKTool} \cite{apktool}. 
+%We further modified \textsc{Jitana} to decode dex files using Android version 6.0.0, which is the version in which the new runtime permissions system is introduced. We also extended \textsc{Jitana} to perform inter-procedural dataflow analysis, which enabled us to detect more API related issues within different methods of an Android app.
+%}
+\@approach's tool and the experimental data are available at the project website~\cite{GainDroid}.
+
+We used the \@approach apparatus for carrying out the experiments. In our evaluation, we address the following research questions:
+
+%Our evaluation of \@approach addresses the following research questions:
+
+\textbf{RQ1.} \textit{Accuracy:} What is the overall accuracy of \@approach in detecting compatibility issues compared to the other state-of-the-art techniques?
+
+\textbf{RQ2.} \textit{Applicability:} How well does \@approach perform in practice? Can it find compatibility issues in real-world applications?
+
+\textbf{RQ3.} \textit{Performance:} What is the performance of \@approach's analysis to identify sources of compatibility issues?
+
+\subsection{Objects of Analysis}
+
+Our experimental objects are a set of Android apps
+drawn from different sources.  
+
+To evaluate the accuracy
+of our analysis technique and compare it against the
+other compatibility analysis tools, we used two suites
+of benchmark apps,
+\textsc{CiD}-Bench~\cite{lili2018cid} and
+\textsc{Cider}-Bench~\cite{huang2018understanding},
+developed independently by other research groups.
+%the DroidBench [4] and ICC-Bench [8] suites of
+%benchmarks, two sets of Android applications
+%containing ICC based privacy leaks for which all
+%vulnerabilities are known in advance—establishing a
+%ground truth.
+\textsc{CiD}-Bench contains seven benchmark apps and
+\textsc{Cider}-Bench contains 20 apps, for which all
+compatibility issues are known in advance--establishing
+a ground truth. 
+%We obtained seven benchmark apps from Li et
+%al.~\cite{lili2018cid} and 20 apps from Huang et
+%al.~\cite{huang2018understanding} as our objects of
+%analysis, for which all compatibility issues are known
+%in advance--establishing a ground truth.
+The collection includes apps of varying sizes ranging
+from 10,400 to 294,400 lines of Dex code and up to tens
+of thousands of methods. The benchmark apps both
+support and target a variety of API levels, with
+minimum levels ranging from 10 to 21 and targets
+ranging from level 23 to 27.  
+One of our baseline system, i.e. \textsc{Lint},
+requires building the apps to perform the compatibility
+analysis. Out of the 27 benchmark apps, eight apps
+cannot be built\footnote{The benchmark apps were built using Gradle~\cite{Gradle}, which dropped support of some Android SDK tool chains. Even with the appropriate SDKs in place on two different systems, Gradle were unable to build the apps.}; therefore, they are excluded from the
+analysis, leaving the total of \rqoneapps~apps used in
+our~comparative~study.
+Using the same benchmark
+apps as prior research allows us to compare our results
+against them and help eradicate internal threats to the
+validity of our results.
+
+To evaluate the implications of our tool in practice, we collected over 3,000 real-world Android apps from the following two sources:
+%To further evaluate the applicability of our tool in practice, we collected a set of real-world Android apps from two repositories of FDroid~\cite{fdroid} and AndroZoo~\cite{allix2016androzoo}. 
+(1) FDroid~\cite{fdroid} is a software
+repository that contains free and open source Android
+apps.  Our collection of subject systems includes all
+\fdroidct\ apps available from the FDroid repository. 
+(2) We also include 2,300 apps from AndroZoo~\cite{allix2016androzoo}, a growing repository of Android apps
+collected from various sources, including the official Google Play store. We were
+unable to build 120 of the apps from AndroZoo so we
+excluded them from our analysis, leaving \apptotal~apps
+in total.
+
+\subsection{Variables and Measures}
+
+\subB{Independent Variables.}
+Our independent variables involve baseline techniques used
+in our study to perform the analysis of compatibility issues.
+These techniques include {\sc CiD}~\cite{lili2018cid}, {\sc
+Cider}~\cite{huang2018understanding}, and
+\textsc{Lint}~\cite{linttips}.
+
+\textsc{CiD} represents a state-of-the-art in detecting
+Android compatibility issues. It has been publicly released,
+and we are able to obtain the tool and compile it in our
+experimental environment.  We use it as the baseline system
+to answer RQ1 and RQ3.
+
+{\sc Cider} is another state-of-the-art approach developed to analyze API compatibility issues. Unfortunately, it is not available in  either source or binary forms at the
+time of writing this article.  As such, we rely on their results as reported in \cite{huang2018understanding} to answer RQ1 and RQ3.
+
+\textsc{Lint} is a static analysis technique, shipped
+with the Android Development Tools (ADT), to examine
+code bases for potential bugs, including incompatible
+API usages.  \textsc{Lint} performs the compatibility
+analysis as part of building apps, and thus requires the app source code to conduct the analysis. We use \textsc{Lint} to answer RQ1 and RQ3.
+
+We also considered {\sc
+IctApiFinder}~\cite{he2018understanding} as a possible
+baseline technique. {\sc IctApiFinder} was introduced
+at about the same time as \textsc{Cider}.
+Unfortunately, the tool is not publicly available and
+our attempts to contact the authors to request access
+were unsuccessful. Therefore, we did not use it in our
+study.
+
+\subB{Dependent Variables.} As dependent variables, we chose
+metrics allowing us to answer each of our three research
+questions.
+
+To measure accuracy, we compare the number of detected compatibility issues with known issues as reported by prior work~\cite{huang2018understanding,lili2018cid}. For each analysis technique, we report true and false positives and false
+negatives thereof in detecting compatibility issues of the apps under analysis. Lastly, we report precision, recall and F-measure for each technique.
+
+
+%We then report true (\tp) and false (\fp) positives and false negatives (\fn) based on comparisons to results from baseline techniques. Lastly, we report precision, recall and F-measure.
+
+\input{tab-results}
+
+
+To measure applicability, we report the number of detected
+compatibility issues in real-world apps. Finally, to measure
+performance, we report the analysis time and the amount of memory used by each of the analysis techniques, i.e., \@approach, {\sc CiD}, and \textsc{Lint}.
+
+
+\subsection{Study Operation}
+
+We conduct our experiments on a MacBook Pro running
+High Sierra 10.13.3 with an Intel Core i5 2.5 GHz CPU
+processor and 8 GB of main memory. To answer RQ1 and
+RQ2, we run each analysis once since the techniques are
+based on static analysis.  To handle uncontrollable
+factors in our experiments addressing RQ3
+(performance), we repeat the experiments three times
+and measure the amount of time required to perform the
+analysis of each app using the analysis techniques,
+each averaged over three attempts. Further, since
+\textsc{Lint} needs to build the app before it can
+perform the analysis, we perform four consecutive
+analysis attempts with {\sc Lint}, and report the
+average analysis time of the last three analyses. 
+
+%To answer RQ3, we measure the amount of time required to perform the analysis of each app using \@approach and {\sc CiD}, each averaged over three attempts.  \textsc{Lint} needs to build the app before it can perform the analysis, so we performed four consecutive analysis attempts with {\sc Lint}, and report the average analysis time of the last three analyses.
+
+ 
+%\begin{comment}
+\subsection{Threats to Validity}
+
+The primary threat to external validity in this study
+involves the object programs utilized. In this work,
+we have studied a smaller set of benchmark programs
+developed and released by prior research
+work~\cite{lili2018cid,huang2018understanding} so that
+we can directly compare our results with their
+previously reported results.  However, we also extend
+our evaluation to employ over 3,590 complex real-world apps from
+other repositories, which in turn enabled us to assess our system in
+real-world scenarios, representative of those that
+engineers and analysts are facing.
+
+The primary threat to internal validity involves
+potential errors in the implementations of \@approach
+and the infrastructure used to run \textsc{CiD} and
+\@approach.  To limit these, we extensively validated
+all of our tool components and scripts to ensure
+correctness.  By using the same objects as our baseline
+systems we can also compare the results produced by our
+approach with those previously reported to help with
+ensuring correctness.
+
+The primary threat to construct validity relates to the
+fact that we study efficiency measures relative to
+applications of \@approach, but do not yet assess
+whether the approach helps software engineers or
+analysts addresses dependability and security concerns
+more quickly than current approaches.
+%\end{comment}

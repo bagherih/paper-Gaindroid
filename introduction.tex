@@ -1,0 +1,152 @@
+\section{Introduction}\label{sec-intro}
+\sloppy
+Android is the leading mobile operating system representing over 80\% of the
+market share~\cite{androidmarketstatistics}. The meteoric rise of Android is
+largely due to its vibrant app market~\cite{googleplayapps}, which currently
+provisions nearly three million apps, with thousands added or updated on a
+daily basis.  Android apps are developed using an application development
+framework (ADF) that ensures apps devised by a wide variety of suppliers can
+interoperate and coexist as long as they comply with the rules and
+constraints imposed by the framework.  An ADF exposes well-defined application
+programming interfaces (APIs) that manifest the set of extension points for
+building the application-specific logic, setting it apart from traditional
+software systems often realized as a monolithic, independent piece of code.
+
+The Android ADF frequently evolves, with hundreds of releases from multiple
+device vendors since 2010~\cite{AndroidReleases}.
+Such rapid evolution leads to
+incompatibilities in Android apps targeted to older
+versions of the framework.  As a result, defects and vulnerabilities, especially
+following ADF updates, continue to plague the dependability and security of
+Android devices and apps~\cite{linares2014api,Update4}. A recent
+study shows that 23\% of Android apps behave differently after a framework
+update, and around 50\% of the Android updates have caused instability in previously working
+apps and systems~\cite{Helppi2014}. This has been referred to as ``death on
+update''~\cite{death1,death2,death3,death4,iOS,youtube}.
+ As part of Android ADF version 6.0 (API-level 23), Google introduced a dynamic permission system.  
+%Google introduced a dynamic permission system as part of Android ADF version 6.0 (API-level 23).  
+Previously, the permission system was entirely static, with the user
+granting all requested dangerous permissions at install
+time.  The new permission system instead allows users to
+grant or revoke permissions at
+run-time~\cite{permissiongroups}.  This new system creates a
+new class of permissions-related incompatibility~issues.
+
+Recent research efforts have studied compatibility
+issues~\cite{huang2018understanding,wei2016taming,wu2017measuring},
+but existing detection techniques target only certain
+types of APIs.  For example, Huang et
+al.~\cite{huang2018understanding} only targets API
+callback related to lifecycles; identifying them requires
+significant manual labor~\cite{huang2018understanding}
+and thorough inspection of incomplete
+documentation~\cite{wu2017measuring}.  Furthermore,
+none of the state-of-the-art techniques consider
+incompatibilities due to the dynamic permission system.
+The state-of-the-art compatibility detection techniques
+also suffer from acknowledged frequent ``false alarms''
+because of the coarse granularity at which they capture
+API information.  The lack of proper support for
+detecting compatibility issues can increase the time
+needed to address such issues, often longer than six 
+months~\cite{siliconangle}.
+Finally, these techniques~\cite{huang2018understanding,he2018understanding} have been shown facing difficulties in handling large scale libraries, due to direct loading of the entire code base for analysis purposes.
+
+%\commentty{what about scalability issues faced by existing work since high scalability is one of the contributions of GainDroid?}
+
+
+
+%\sloppy In this paper, we present a \textbf{g}eneral, \textbf{a}utomated
+\sloppy In this paper, we present a \textbf{s}calable, \textbf{a}utomated
+\textbf{i}ncompatibility \textbf{n}o\textbf{t}ifier for Android, dubbed \@approach, which automatically 
+%\sloppy In this paper, we present \@approach (\textbf{G}eneral, fully \textbf{A}utomated \textbf{I}ncompatibility \textbf{N}otifier for And\textbf{DROID}), which automatically %detects compatibility issues regarding the use of all Android APIs and the new runtime permissions system. \commentty{through static analysis?}
+detects all types of API- and permission-induced mismatches.
+Existing state-of-the-art compatibility detection techniques
+require to either analyze the entire ADF codebase or manually model common compatibility callbacks of ADF classes, prior to detecting incompatibilities~\cite{huang2018understanding,lili2018cid,he2018understanding};
+as such they face serious scalability issues that limit their abilities to detect complex types of incompatibilities. 
+Different from all these techniques, \@approach overcomes such scalability issues by gradually loading and analyzing classes, wherein a reachability analysis is leveraged to stumble on all pertinent classes.
+
+
+%Different from the state-of-the-art compatibility detection techniques that rely on the traditional compiler-based approaches for static analysis~\cite{huang2018understanding,lili2018cid}, \@approach takes a class loader-based analysis approach that gradually loads and analyzes classes, wherein a reachability analysis is leveraged to stumble on all pertinent classes. \@approach then analyzes the identified API call sites and their concomitant conditions to effectively detect compatibility issues regarding the use of all Android APIs and the new runtime permissions system.
+
+
+
+\@approach has several advantages over existing
+work. First, 
+unlike prior techniques that focus on specific types of APIs,
+our approach has the potential to greatly increase the
+scope of analysis by automatically and effectively
+analyzing all of the APIs in an ADF version.
+Second, \@approach also analyzes platform code to
+uncover compatibility issues that exist within the
+framework; these issues cannot be detected by analyzing
+only the application code---an approach commonly taken
+by the state-of-the-art
+incompatibility detectors~\cite{huang2018understanding,lili2018cid,linttips}.
+%\commentty{Third, we may also need to highlight the benefits of GainDroid in terms of scalability. And mention that the key idea of improving efficiency is to incrementally load and analyze classes.}
+Third, incrementally loading and analyzing classes allows our technique to be remarkably faster and more scalable than the state-of-the-art in compatibility detection.
+
+
+
+Our evaluation of \@approach against the state-of-the-art analysis
+techniques using thousands of real-world Android apps indicates that 
+%\@approach detects more occurrences and types of incompatibilities. The result also contains fewer false positives. 
+%Our experiments indicate that 
+\@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms. 
+It also successfully detects permission-induced mismatches that cannot be even detected by state-of-the-art techniques.
+In addition, \@approach is  up to 8.3 times (four times on average) faster than
+the state-of-the art techniques. 
+
+
+%\commentty{Can we put the actual numbers here? E.g., the improvement of incompatibility detection,  performance gain, etc.}
+%in the context of real-world Android
+%apps collected from variety of repositories have been very
+%The results, among other things, corroborate its
+%ability to outperform existing analysis techniques both by
+%remarkably decreasing the number of false positives and by
+%detecting new classes of incompatibilities.  
+To summarize,
+this paper makes the following contributions:
+ 
+ 
+\begin{itemize}
+%\vspace{-0.2cm}
+%{\color{green} 
+\item \textit{General API and permission-induced incompatibility detection algorithms}: We
+introduce novel algorithms that automatically detect all types of API incompatibilities and misuses of runtime permission
+APIs to which an app may be vulnerable across ADF~versions.
+
+
+\item \textit{Scalable incompatibility detection approach}:
+We introduce a scalable analysis approach that can incrementally
+load and analyze classes to handle large scale libraries in 
+detecting incompatibility issues. 
+%}
+
+\item \textit{Publicly available tool implementation}: We develop a fully~automated
+technology, \@approach, that effectively realizes~our
+compatibility detection approach. We make \@approach publicly available to the research and education~community~\cite{GainDroid}.
+
+
+
+\item \textit{Experiments}: We present results from
+experiments run on 3,590 real-world apps and benchmark
+apps, corroborating \@approach's ability in (1)
+effective compatibility analysis of Android apps,
+reporting many issues undetected by the
+state-of-the-art analysis techniques; and (2)
+outperforming other tools in terms of scalability.
+
+\end{itemize}
+
+The rest of this paper is organized as follows.
+Section~\ref{sec-background} illustrates various examples of
+Android compatibility issues.  Section~\ref{sec-approach}
+provides an overview of \@approach to effectively detect
+compatibility issues.  Section~\ref{sec-eval} describes our 
+empirical study, and
+Section~\ref{sec-results} reports the results. Finally, the
+paper concludes with a discussion of %performance benefits
+current limitations, and an outline of the related
+research and future work.
+ 

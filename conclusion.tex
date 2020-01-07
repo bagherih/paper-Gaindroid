@@ -1,0 +1,40 @@
+\section{Conclusion and Future Work}\label{sec-conclusion}
+%\vspace{-0.3cm}
+
+This paper presents \@approach, a novel approach and
+accompanying tool-suite for efficient analysis of various
+types of crash-leading Android compatibility issues.  The
+experimental results of comparing \@approach with the
+state-of-the-art in Android incompatibility detection
+corroborate its ability to efficiently detect more sources
+of potential issues, yielding fewer false positives and
+executing in a fraction of the time needed by the other
+techniques.  Applying \@approach to thousands of real-world
+apps from various repositories reveals that as many as 42\%
+of the analyzed apps are prone to API invocation mismatch,
+20\% can crash due to API callback mismatch, and 40\% of the
+apps can suffer from crashes due to permissions-related
+mismatch, indicating that such problems are still prolific
+in contemporary, real-world Android apps. 
+%and that
+%\@approach can successfully perform large scale analysis.
+
+Besides what we already discussed in Section~\ref{sec-discussion}, we also plan as part of our future work to explore the trade-off between increasing analysis precision, e.g.,
+through incorporating additional information such as CCFG for the compatibility analysis, and higher analysis overhead. In addition, we plan to develop a complementing code synthesizer to help repair apps that do not properly handle detected mismatches. 
+
+\begin{comment}
+\commentcs{
+We also plan to develop new detectors to identify other events that can lead to dependability and security issues. 
+Another idea
+is to provide guidance to users to replace the use of
+possibly outdated or deprecated APIs with more updated
+ones.  For example, our system can recommend a
+developer to replace the old SSL API with the new one.
+While the old one still works,  it is less secure than
+the newer API.
+}
+\end{comment}
+ 
+
+ 
+%\@approach will be made available to other researchers and practitioners upon the publication of this work.

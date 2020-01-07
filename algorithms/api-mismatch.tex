@@ -1,0 +1,43 @@
+\begin{algorithm}[t] 
+    \footnotesize \relax 
+\caption{Detecting API mismatches in an Android application}
+\label{alg:api-mismatch-orig}
+\begin{algorithmic}[1]
+\Procedure{DetectApiMismatch}{app, graph, apidb}
+\newline\Comment{
+    \rlap{\bf Input:}\phantom{\bf Output:}   {\bf app}: Decompiled Android APK, with SDK version information \newline
+                     \phantom{\bf Output:} {\bf graph}: Call/data flow graph for the app \newline
+                     \phantom{\bf Output:} {\bf apidb}: Database/map of APIs, indexed by API level
+}
+\newline\Comment{\textbf{Output:} Set of detected mismatches}
+    \State {mismatches $\gets \emptyset$}
+    \State {(minLvl, maxLvl) $\gets$ (app.minSdk, app.maxSdk)}
+    \ForEachIn{method}{\Call{GetCallGraph}{graph}}
+        \LeftComment{Callback Mismatch: check for missing overridden API methods}        
+        \If {\Call{IsApiOverride}{method}}
+            \ForEachIn{lvl}{(minLevel..maxLevel)}
+                \If{$\neg$apidb.\Call{Contains}{method, lvl}}
+                    \State {mismatches $\gets$ mismatches $\cup$ \{method\}}
+                \EndIf
+            \EndFor
+        \EndIf
+        \LeftComment{Invocation Mismatch: check for missing methods called by the app}
+       	\State{dataFlowGraph $\gets$ \Call{GetDataFlowGraph}{graph, method}}
+       	\ForEachIn{node}{dataFlowGraph}
+            \If{\Call{IsGuardStart}{node}}
+                \State{(minLvl, maxLvl) $\gets$ \Call{GetGuard}{ins, minLvl, maxLvl}}
+            \ElsIf{\Call{IsApiCall}{node}}
+                \ForEachIn{lvl}{(minLvl..maxLvl)}
+                    \If{$\neg$apidb.\Call{Contains}{node, lvl}}
+                        \State{mismatches $\gets$ mismatches $\cup$ \{node\}}
+                    \EndIf
+                \EndFor
+            \ElsIf{\Call{IsGuardEnd}{node}}
+                \State{(minLvl, maxLvl) $\gets$ (app.minSdk, app.maxSdk)}
+            \EndIf
+        \EndFor
+    \EndFor
+    \State{\Return{mismatches}}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}

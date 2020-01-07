@@ -1,0 +1,42 @@
+\begin{algorithm}[H]%[t!] 
+%\scriptsize 
+%\footnotesize
+\small
+\relax 
+%\caption{Detecting permission mismatches}
+%\label{alg:permissions-mismatch}
+\begin{algorithmic}[1]
+\Procedure{DetectPermissionMismatch}{app, graph, permMap}
+\newline\Comment{\rlap{\bf Input:}\phantom{\textbf{Output:}} Decompiled APK, call/data flow graph, permission map}
+\newline\Comment{\textbf{Output:} List of detected mismatches}
+    \State{dangerousPerms $\gets$ \Call{GetDangerousPermsFromManifest}{app}}
+    \If{dangerousPerms $=\emptyset$}
+        \State{\Return{$\emptyset$}}
+    \EndIf
+    \State{callGraph $\gets$ \Call{BuildCallGraph}{app}}
+    \If{app.targetSdkVersion $\geq 23$}
+        \ForEachIn{method}{callGraph}
+            \If {\Call{OverridesOnRequestPermissionsResult}{method}}
+                \State{\Return{$\emptyset$}}    
+            \EndIf
+        \EndFor
+    \EndIf
+    \State{mismatches $\gets\emptyset$}
+    \ForEachIn{method}{callGraph}
+        \State {dataFlowGraph $\gets$ \Call{GetDataFlowGraph}{graph, method}}
+        \ForEachIn{block}{dataFlowGraph}
+            \ForEachIn{perm}{dangerousPerms}
+               	\If {permMap.\Call{IsUsingPermission}{perm, block}}
+                   	\State{mismatches $\gets$ mismatches $\cup$ \{perm\}}
+                \EndIf
+            \EndFor
+        \EndFor
+    \EndFor
+    \State{\Return{mismatches}}
+\EndProcedure
+\end{algorithmic}
+\captionof{algorithm}{Detecting PRM mismatches}
+\label{alg:prm-mismatch}
+\end{algorithm}
+
+ 

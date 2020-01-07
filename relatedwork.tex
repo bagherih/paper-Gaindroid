@@ -1,0 +1,248 @@
+\section{Related Work}\label{sec-related}
+
+Android incompatibility issues have received a lot of
+attention recently. Here, we provide a discussion of the
+related efforts in light of our research.
+
+\textbf{API evolution}. A large body of existing research
+focuses on the evolving nature of APIs, which is an
+important aspect of software
+maintenance~\cite{mcdonnell2013empirical},
+\cite{bavota2015impact}, \cite{li2018characterising},
+\cite{lamothe2018exploring}, \cite{linares2013api},
+\cite{Fazzini:2017:ACI:3155562.3155604},
+\cite{mahmoudi2018android}, \cite{mutchler2016target}. These
+research efforts  explore the problems that are introduced
+by API changes. Among others, McDonnell et
+al.~\cite{mcdonnell2013empirical} studied Android's fast API
+evolution (115 API updates/month), and and noticed developers'
+hesitation in embracing the fast-evolving APIs. The results
+of this study suggest that API updates are more defect-prone
+than other types of changes, which might cause application
+instability and potential vulnerabilities~\cite{linares2013api}.
+Mutchler et al.~\cite{mutchler2016target} explored the consequences of
+running applications targeted to older Android versions on
+devices employing recent Android versions, and how it can
+introduce serious security issues. Li et al.
+\cite{li2018characterising} investigated the frequency with
+which deprecated APIs are used in the development of Android
+apps, considering the deprecated APIs' annotations,
+documentations, and removal consequences along with
+developers' reactions to APIs deprecations. Bavota et al.
+\cite{bavota2015impact} showed that applications with higher
+user ratings use APIs that are less change- and fault-prone
+compared to the applications with lower ratings. 
+
+%
+
+%\textcolor{red}{
+%The results of these studies, identifying potential issues
+%caused by API evolutions, are the primary motivations for
+%this work.
+
+These prior efforts clearly motivate the need to address
+issues that can arise from API evolution.  However, their
+approaches do not provide detailed technical solutions or
+methods to systematically detect the root causes of these
+problems.  \textsc{\@approach}, on the other hand, is
+designed to be effective at detecting crash-leading API
+related issues.
+
+%}
+
+\begin{comment}
+
+\textbf{Android testing}. The other line of related research
+efforts involves techniques that have been proposed to
+expose potential runtime errors, mainly using various
+testing methods ~\cite{moran2016automatically},
+\cite{khan2018crashsafe}, \cite{moran2017crashscope},
+\cite{gomez2013reran}, \cite{amalfitano2012using},
+\cite{amalfitano2015mobiguitar}. For example, Moran et al.
+\cite{moran2017crashscope} presented a systematic input
+generation driven by both static and dynamic analyses to
+trigger app crashes. 
+%Automatically discovering, reporting and reproducing
+%android application crashes
+Given such automatically generated inputs, it produces a
+crash report containing screenshots, detailed crash
+reproduction steps, the captured exception stack trace, and
+a fully replayable script that automatically reproduces the
+crash on a target device. Amalfitano et al.
+\cite{amalfitano2015mobiguitar} extracted relationships
+between GUI widgets to automatically generate test cases,
+with the goal of yielding possible runtime errors raised by
+the automatic generated test cases.
+\textcolor{pblue}{However, testing by itself cannot uncover
+the underlying reasons for application crashes. These
+techniques generate inputs for the target app to exercise
+illegal sequences of events that may lead to a crash. In
+these works, detection of incompatible Android APIs across
+different levels of the framework is missing. \@approach
+however, addresses and detects this problem in Android
+framework, which exists due to its fast paced API
+evolution.}
+
+
+
+\textbf{Android fragmentation}.  The other relevant thrust
+of research has focused on investigating the Android
+ecosystem by running different custom Android distributions
+on different hardware to identify potential application
+instability and uncovering the causes
+\cite{han2012understanding}, \cite{li2015characterizing},
+\cite{pathak2011bootstrapping},
+\cite{liu2014characterizing}, \cite{zhou2014peril},
+\cite{wei2016taming}, \cite{aafer2016harvesting}.  Aafer et
+al. \cite{aafer2016harvesting} investigated how modifying
+the operating system can introduce security problems within
+the mobile OS. Han et al. \cite{han2012understanding}
+studied the bug reports related to HTC and Motorola devices
+in the Android issue tracking system, and discovered that
+Android ecosystem was fragmented, meaning that applications
+might behave differently when installed on phones from
+different vendors. Liu et al. \cite{liu2014characterizing}
+observed that a noticeable percentage of Android performance
+bugs occur only on specific devices and platforms.  Moran et
+al. \cite{moran2017crashscope} presented a systematic input
+generation driven by both static and dynamic analyses to
+trigger app crashes. 
+%Automatically discovering, reporting and reproducing
+%android application crashes
+Given such automatically generated inputs, it produces a
+crash report containing screenshots, detailed crash
+reproduction steps, the captured exception stack trace, and
+a fully replayable script that automatically reproduces the
+crash on a target device.  
+%
+%\textcolor{red}{
+
+These research efforts primarily focused on
+behavioral differences when an app is installed on different
+operating systems and/or hardware platforms.  They mainly
+rely on hardware specifications and changes in the Android
+documentation to uncover potential compatibility or
+behavioral issues. Therefore, these approaches are not
+useful when such platform related information is incomplete,
+inconsistent, or unavailable.  Furthermore,  applying these
+approaches to test an application on the entire vast
+hardware ecosystem of Android devices may not be feasible
+due to exponentially large system configurations.  Our work,
+on the other hand, focuses on a more tractable and important
+problem due to API evolution and how it can affect the apps
+and their performance regardless of the operating system
+distribution or the hardware the applications are running
+on.
+
+\end{comment}
+
+%There is also work on identifying other reasons for application crashes, and one of the common reasons for these crashes is API incompatibility \cite{lili2018cid}, \cite{huang2018understanding}.
+\textbf{API incompatibility}. 
+%The other, perhaps most closely related relevant line of research to ours focuses
+%A number of techniques have been recently developed for
+%detecting Android API incompatibilities.  
+In Table~\ref{tab:table_comparison_tools}, we compare the
+detection capabilities of \textsc{\@approach} against the
+current state-of-the-art approaches. It is important to
+stress that \@approach is the only solution that 
+%provides the capability of 
+can automatically detect various types of
+Android compatibility issues, i.e., API invocation
+compatibility issues (API), API callback compatibility
+issues (APC), and permission-induced compatibility issues
+(PRM). %We continue to discuss some of the closely related works to ours and the differences between those works and ours.
+%compared to the one issue identified by each of the other
+%approaches.
+
+\begin{table}%{R}{0.40\textwidth}
+    %\vspace{-5ex}
+    \input{table_comparison_tools.tex}
+    \vspace{-0.3cm}
+\end{table}
+
+Wu et al.~\cite{wu2017measuring} investigated side effects
+that may cause runtime crashes even within an app's
+supported API ranges, inspiring subsequent work.
+%
+Huang et al.~\cite{huang2018understanding}
+aimed to understand callback evolution and developed
+\textsc{Cider}, a tool capable of identifying API callback
+compatibility issues. However, \textsc{Cider}'s analysis
+relies on manually built PI-GRAPHS, which are models of
+common compatibility callbacks of four classes: Activity,
+Fragment, Service and WebView. \textsc{Cider} thus does not deal
+with APIs that are not related to these classes or
+permission induced mismatches. 
+%As this tool focuses on these predefined callback classes, 
+%Moreover, by only focusing on callback classes, 
+As such, their reported result
+is a subset of ours. In addition, \textsc{Cider}'s API
+analysis is based on the Android documentation, which is
+known to be incomplete~\cite{wu2017measuring}. Our work, on
+the other hand, automatically analyzes each API level in its
+entirety to identify all existing APIs. This allows our
+approach to be more accurate in detecting actual changes in
+API levels, as there are frequent platform updates and bug
+fixes. As a result, and as confirmed by the evaluation results, 
+our approach features much higher precision and recall  in detecting compatibility issues.
+%\textsc{Cider} also relies on constructing Callback Control
+%Flow Graph, while our analysis simply works on an existing
+%method call graph and data flow graphs generated by
+%\textsc{Jitana} to help us uncover sources of potential
+%issues.}  % but it comes at a cost of higher manual efforts
+%and possibly longer analysis time. However, while being
+%able to complete each analysis in just a few seconds.
+%Another difference between the two approaches is that their
+%analysis is based on \textsc{Soot}, which requires the Dex
+%code be converted to Jimple.
+
+Lint \cite{linttips} is a static analysis tool introduced in
+ADT (Android Development Tools) version 16. One of the
+benefits of Lint is that the plugin is integrated with the
+Android Studio IDE, which is the default editor for Android
+development. The tool checks the source code to identify
+potential bugs such as layout performance issues, and
+accessing API calls that are not supported by the target API
+version. However, the tool generates false positives when
+verifying unsupported API calls (e.g., when an API call
+happens within a function triggered by a conditional
+statement). Another disadvantage is that it requires the
+availability of the original source code, and it does not
+analyze Android application packages, i.e., apk files.  In
+addition, \textsc{Lint} requires the project to be first
+built in the Android Studio IDE before conducting the
+analysis.  Unlike \textsc{Lint}, \@approach operates
+directly on Dex code. While \textsc{Lint} claims to be able
+to detect API incompatibility issues, our experimental
+results as well as the results obtained by Huang et al.
+indicate that \textsc{Lint} is not as effective as
+\@approach or \textsc{Cider}.
+
+Li et al.~\cite{lili2018cid} provided an overview of the
+Android API evolution to identify cases where compatibility
+issues may arise in Android apps. They also presented
+\textsc{CiD}, an approach for identifying compatibility
+issues for Android apps. This tool models the API lifecycle,
+uses static analysis to detect APIs within the app's code,
+and then extracts API methods from the Android framework to
+detect backward incompatibilities.  \textsc{CiD} supports
+compatibility analysis upto the API level 25.  In
+comparison, \@approach offers automated extraction of the
+API database, and thereby supports up to the most recent
+Android platform (API level 28).  Moreover, in contrast to
+\@approach, \textsc{CiD} did not consider incompatibilities
+regarding the runtime permission system.
+
+Wei et al.~\cite{wei2016taming} conducted a study to
+characterize the symptoms and root causes of compatibility
+problems, concluding that the API evolution and problematic
+hardware implementations are major causes of compatibility
+issues. They also propose a static analysis tool to detect
+issues when invoking Android APIs on different devices.
+Their tool, however, needs manual work to build API/context
+pairs, of which they only define 25. Similar to our prior
+discussion of work by Huang et al., the major difference
+between our work and this work is that our approach can
+focus on all API methods that exist in an API level. Again,
+the result reported by their approach would be a subset of
+our detected issues.

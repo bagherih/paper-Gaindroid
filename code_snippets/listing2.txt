@@ -1,0 +1,16 @@
+@Override
+protected void onCreate(Bundle savedInstanceState){
+
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    TextView text = findViewById(R.id.text);
+    
+    if(Build.VERSION.SDK_INT >= 23){
+        text.setTextColor(resources.getColorStateList(
+            R.color.colorAccent, context.getTheme()));
+    }
+    else {
+        text.setTextColor(resources.getColorStateList(
+            R.color.colorAccent));
+    }
+}

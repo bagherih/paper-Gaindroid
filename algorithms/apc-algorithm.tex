@@ -1,0 +1,20 @@
+\begin{algorithm}[H]
+%\scriptsize
+%\footnotesize
+\small
+\begin{algorithmic}[1]
+    \Procedure{IsApcMismatch}{method, app}\newline
+    \Comment{{\bf Input:} Method from call graph, decompiled APK}
+    \If {\Call{IsApiOverride}{method}}
+        \ForEachIn{lvl}{(app.minSdk..app.maxSdk)}
+            \If{$\neg$apidb.\Call{Contains}{method, lvl}}
+                \State {mismatches $\gets$ mismatches $\cup$ \{method\}}
+            \EndIf
+        \EndFor
+    \EndIf
+    \State{\Return{mismatches}}
+\EndProcedure
+\end{algorithmic}
+\captionof{algorithm}{Detecting APC mismatches}
+\label{alg:apc-mismatch}
+\end{algorithm}

@@ -1,0 +1,66 @@
+\begin{abstract}
+
+\begin{comment}
+
+Android has been the leading mobile operating system since
+late 2010. Despite its dominance in the mobile market share,
+it is common to find users talking about their poor
+experience using apps in online communities due to run-time
+crashes, which may lead them to use rival apps. This
+incompatibility problem is due primarily to the frequent
+changes in the Android framework, where every new release
+adds new functionalities to improve performance and
+security. Android API evolves rapidly, and apps often do not
+offer proper support to either previous or most recent
+Android API levels, which leads to run-time crashes.  In
+this paper, we present \@approach, an automated approach
+that verifies if an app may cause run-time crashes. We
+compared \@approach against the state of the art tools and
+verified that our approach identifies more API invocation
+and API callback mismatches true positives with less false
+positives. In addition, \@approach detects if the crash may
+occur due to permission request or revocation mismatch. We
+also conducted a large study over 3,571 real-world apps
+downloaded from Androzoo and F-Droid to compare the
+scalability of our approach to the state-of-the-art tools.
+We find that \@approach is more effective than the
+state-of-the-art techniques in detecting API
+incompatibilities, it identifies a new set of errors related
+to permissions and it is 4 times faster than current tools.
+
+\end{comment}
+
+\begin{comment}
+Android has been the leading mobile operating system since late 2010. Despite
+its dominance in the mobile market share, it is common to find users talking
+about their poor experience using apps in online communities due to run-time
+crashes, which may lead them to use rival apps. This incompatibility problem is
+due primarily to the frequent changes in the Android framework, where every new
+release adds new functionalities to improve performance and security. Android
+API evolves rapidly, and apps often do not offer proper support to either
+previous or most recent Android API levels, which leads to run-time crashes.
+In this paper, we present \@approach, an automated approach that verifies if an
+app is using Android APIs and dangerous permissions that may cause run-time
+crashes. We conducted a study with 1,886 apps and compared our approach against
+the state-of-the-art tools. We find that \@approach is more effective than the
+state-of-the-art techniques in detecting general API incompatibilities and the
+permission-induced compatibility issues that can lead to run-time crashes.
+\end{comment}
+\sloppy
+With the ever-increasing popularity of mobile devices over the last decade,
+mobile applications and the frameworks upon which they are built frequently
+change, leading to a confusing jumble of devices and applications utilizing
+differing features even within the same framework. For Android apps and
+devices---the largest such framework and marketplace---mismatches between the
+version of the app API installed on a device and the version targeted by the
+developers of an app running on that device can lead to run-time crashes,
+providing a poor user experience. In this paper, we present \@approach, a new
+analysis approach that automatically detects three types of mismatches to which an
+app may be vulnerable across versions of the Android API it declaratively
+supports. We applied \@approach to 3,590 apps and compared the results of our
+analysis against state-of-the-art tools. The experimental results corroborate
+its ability to remarkably outperform the existing analysis techniques in terms
+of both the number and type of mismatches correctly identified as well as
+run-time performance of the analysis.
+
+\end{abstract}

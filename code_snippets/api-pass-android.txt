@@ -1,0 +1,11 @@
+override fun onWrite(pageRanges: Array<PageRange>,
+    destination: ParcelFileDescriptor,
+    cancellationSignal: CancellationSignal,
+    callback: PrintDocumentAdapter.WriteResultCallback)
+{
+        val page = mPdfDocument!!.startPage(0)
+        val canvas = page.canvas
+
+        drawPass(canvas)
+        ...
+}

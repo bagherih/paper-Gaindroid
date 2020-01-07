@@ -1,0 +1,138 @@
+%\documentclass[10pt,conference]{IEEEtran}
+%\documentclass{llncs}
+%\documentclass[format=acmsmall]{acmart}
+\documentclass[sigconf,review]{acmart}
+\usepackage[noend]{algpseudocode}
+\usepackage{standalone}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{textcomp}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{lstlinebgrd}
+\usepackage[compatibility=false]{caption}
+\usepackage{balance}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage{pifont}
+\usepackage{soul}
+\usepackage{booktabs} % for \specialrule command, thick table line
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{ppurple}{RGB}{138,43,226}
+\definecolor{highlight}{rgb}{0.88,0.88,0.66}
+
+\newcommand{\commentbs}[1]{{\color{blue} BS: \sf (#1)}}
+\newcommand{\commenthb}[1]{{\color{purple} HB: \sf
+#1}}
+\newcommand{\commentws}[1]{{\color{red} WS: \sf (#1)}}
+\newcommand{\commentnm}[1]{{\color{brown} NM: \sf (#1)}}
+\newcommand{\commentcs}[1]{{\color{orange} CS: \sf (#1)}}
+\newcommand{\commentty}[1]{{\color{green} TY: \sf (#1)}}
+
+\makeatletter
+\newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+\makeatother
+
+
+\newcommand{\subB}{\vspace{3pt}\noindent\textbf}
+\newcommand{\subI}{\vspace{3pt}\noindent\emph}
+
+\definecolor{tcolor}{rgb}{0,0.65,0}
+\definecolor{fcolor}{rgb}{0.8,0,0}
+
+\newcommand{\tp}{\textcolor{tcolor}{$\text{\rlap{\checkmark}}\square$}}
+\newcommand{\fp}{\textcolor{fcolor}{$\boxtimes$}}
+\newcommand{\fn}{\textcolor{fcolor}{$\square$}}
+
+\newcommand{\cmark}{\text{\ding{51}}}%
+\newcommand{\xmark}{\text{\ding{55}}}%
+
+\algrenewcommand\alglinenumber[1]{\tiny #1:}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algnewcommand\algorithmicin{\textbf{in}}
+\algnewcommand{\LeftComment}[1]{\State\(\triangleright\) #1}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+\algdef{S}[FOR]{ForEachIn}[2]{\algorithmicforeach\ #1\ \algorithmicin\ #2\ \algorithmicdo}
+
+%\def \@atitle{{\normalsize GAIND}{\small ROID}}
+%\def \@approach{\textsc{GAINdroid}}
+\def \@atitle{{\normalsize SAINT}{\small DROID}}
+\def \@approach{\textsc{SAINTdroid}}
+\def \apptotal {3,571}
+
+\input{kotlin}
+
+%\linespread{0.985}
+
+\begin{document}
+
+%\title{\@approach: Automatic Detection of API-related Compatibility Issues in Android Applications}
+%\title{\@approach: General Automated Incompatibility Notifier for Android Applications}
+%\title{General Automated Incompatibility Detection for Android} 
+\title{Scalable, Automated Incompatibility Detection for Android} 
+%\title{Detecting and Mitigating Architectural Mismatch in Evolutionary Android Systems}
+
+
+\begin{abstract}
+With the ever-increasing popularity of mobile devices over
+the last decade, mobile applications and the frameworks upon
+which they are built frequently change, leading to a
+confusing jumble of devices and applications utilizing
+differing features even within the same framework. For
+Android apps and devices---the largest such framework and
+marketplace---mismatches between the version of the app API
+installed on a device and the version targeted by the
+developers of an app running on that device can lead to
+run-time crashes, providing a poor user experience. In this
+paper, we present \@approach, a new analysis approach that
+automatically detects all types of mismatches to which an
+app may be vulnerable across versions of the Android API it
+declaratively supports. 
+%We applied \@approach to 3,590 apps and compared the results of our analysis against state-of-the-art tools. The experimental results corroborate its ability to outperform the existing techniques in terms of both the number and type of mismatches correctly identified  as well as run-time performance of the analysis.  
+%The results of our experiments, conducted over thousands of real-world apps, 
+We applied \@approach to 3,590 real-world apps and compared the results of our analysis against the state-of-the-art techniques,
+which corroborates that \@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms.
+We also show that our approach, which gradually loads and analyzes classes as needed, remarkably outperforms the existing techniques in terms of scalability.
+
+\end{abstract}
+
+\keywords{Android compatibility, program analysis, software evolution}
+
+\maketitle
+
+%\begin{IEEEkeywords}
+%Android compatibility, program analysis, software evolution
+%\end{IEEEkeywords}
+
+\input{introduction}
+\input{background}
+\input{approach}
+\input{evaluation}
+\input{results}
+\input{discussion}
+\input{relatedwork}
+\input{conclusion}
+
+%\newpage
+%\bibliographystyle{IEEEtran}
+\balance
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{paper}
+
+\end{document}
+
+
+ 

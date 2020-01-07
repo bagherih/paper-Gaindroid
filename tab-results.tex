@@ -1,0 +1,87 @@
+
+\newcommand{\timelbl}{Secs.}
+%\begin{sidewaystable}
+%\scriptsize
+%\centering
+%\begin{threeparttable}[c]
+\begin{table}%[b!]
+%\begin{tiny}
+\caption {\label{tab:tab-results} Comparison between \@approach, \textsc{CiD}, \textsc{Cider}, and \textsc{Lint}. TP, FP and FN are~represented~by~symbols \tp, \fp, \fn, respectively. X(\#) indicates the number \# of detected instances for the~corresponding~symbol~X.}
+\vspace{-0.2cm}
+%\small{
+\footnotesize{
+\begin{tabular}{cl|ll|ll|ll} 
+\hline
+\hline
+\rule{0pt}{3ex}
+&     & \multicolumn{2}{|c}{\sc \small{\@approach}} & \multicolumn{2}{|c}{\sc \small{CiD+Cider}} & \multicolumn{2}{|c}{\sc \small{Lint}} \\
+& \multicolumn{1}{l|}{{\small App}} 
+ & \multicolumn{1}{l}{API} & \multicolumn{1}{l|}{APC} 
+ & \multicolumn{1}{l}{API} & \multicolumn{1}{l|}{APC} 
+ & \multicolumn{1}{l}{API} & \multicolumn{1}{l}{APC} \\
+\hline
+\hline
+\rule{0pt}{3ex}
+\parbox[t]{2mm}{\multirow{22}{*}{\rotatebox[origin=c]{90}{\small {\sc Cider}-Bench}}}
+& AFWall+         &  (\tp9)          & (\tp7)      & (\fn9)         & \tp(\fn6) &  \tp(\fn8) & (\fn7)          \\ \cmidrule{2-8}
+& DuckDuckGo      &                  & \fn       & (\fp3)           & \tp         &               & \fn              \\ \cmidrule{2-8}
+& \multirow{2}{*}{FOSS Browser}    &                  & \multirow{2}{*}{(\tp7)}   & \multirow{2}{*}{(\fp4)}       & \multirow{2}{*}{(\fn7)}     &  & (\fp3)  \\ 
+&    &                  &    &        &      &  & (\fn7)  \\ \cmidrule{2-8}
+& \multirow{2}{*}{Kolab notes}     &  (\tp3)    &          & (\tp3)  & \multirow{2}{*}{\fp}        & \multirow{2}{*}{(\fn3)}       &              \\ 
+&      &  (\fp9)    &          & (\fp13)  &        &        &              \\ \cmidrule{2-8}
+& \multirow{2}{*}{MaterialFBook}   &  (\tp11)&              & (\tp14)   &             & \multirow{2}{*}{(\fn14)}      &               \\
+&    &  \fp(\fn3)&              & (\fp17)   &             &       &               \\ \cmidrule{2-8}
+& NetworkMonitor  &                  & (\tp5)  &                      & (\fn5)    &                 & (\fn5)            \\ \cmidrule{2-8}
+& NyaaPantsu      &                  & (\tp12) &                       & (\fn12)   &   & (\fn12)          \\ \cmidrule{2-8}
+& \multirow{2}{*}{Padland}         &                  & \multirow{2}{*}{\fn}     &      \multirow{2}{*}{(\fp4)}           & \multirow{2}{*}{\tp}       &  & (\fp2)         \\ 
+&          &                  &      &                 &        &  & \fn         \\ \cmidrule{2-8}
+& PassAndroid     &  (\tp9)          & (\tp3)  &      (\fn9)          & (\fn3)      & (\fn9)       & (\fn3)            \\ \cmidrule{2-8}
+& \multirow{2}{*}{SimpleSolitaire} &  \multirow{2}{*}{\tp\fp}          & \multirow{2}{*}{(\tp2)}  &      \tp       & \multirow{2}{*}{\tp\fn}      & \multirow{2}{*}{\fn}          & (\fp2)     \\
+&  &          &   &      (\fp10)       &       &          & (\fn2)     \\ \cmidrule{2-8}
+& SurvivalManual  &                  &         &     (\fp19)        &           &  &                   \\ \cmidrule{2-8}
+& Uber ride       &                  & (\tp4)  &      (\fp2)         & (\tp4)     & & \fp(\fn4)    \\
+\hline
+\hline
+\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{\small {\sc CiD}-Bench}}}
+& Basic       & \tp    & &  \tp        &  & \fn    &   \\ \cmidrule{2-8}
+& Forward     & \tp    &  & \tp        &  & \fn    &   \\ \cmidrule{2-8}
+& GenericType & \tp        & & \tp           &  & \fn       &   \\ \cmidrule{2-8}
+& Inheritance & (\tp2) &  & (\tp2)   &    & (\fn2) &   \\ \cmidrule{2-8}
+& Protection  &     &  &       &  &       &   \\ \cmidrule{2-8}
+& Protection2 &     &  &       &   & \fn    &   \\ \cmidrule{2-8}
+& Varargs     & (\tp2) &  & (\tp2)  &    & (\fn2) &   \\
+\hline
+\hline
+\multicolumn{2}{l|}{\rule{0pt}{3ex}\bf Precision:} & \multicolumn{1}{l}{\bf 79\%} & \multicolumn{1}{l|}{\bf 100\%} &  \multicolumn{1}{l}{\bf  27\%} & 
+ \multicolumn{1}{l|}{\bf 89\%} & \multicolumn{1}{l}{\bf 100\%} & \multicolumn{1}{l}{\bf 0\%} \\ 
+\multicolumn{2}{l|}{\bf Recall:}                   & \multicolumn{1}{l}{\bf 93\%} & \multicolumn{1}{l|}{\bf  95\%} &  \multicolumn{1}{l}{\bf 59\%} & 
+\multicolumn{1}{l|}{\bf 19\%} &  \multicolumn{1}{l}{\bf 2\%} & \multicolumn{1}{l}{\bf 0\%}  \\ 
+\multicolumn{2}{l|}{\bf F-Measure:}                & \multicolumn{1}{l}{\bf 85\%} & \multicolumn{1}{l|}{\bf  98\%} & \multicolumn{1}{l}{\bf  42\%} & 
+\multicolumn{1}{l|}{\bf 31\%} & \multicolumn{1}{l}{\bf 4\%} & \multicolumn{1}{l}{\bf 0\%}  \\ 
+\hline
+\hline
+%\rule{0em}{3ex}
+%\parbox[t]{5mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{AZ/FD\tnote{3}}}} & \multicolumn{13}{l}{\rlap{API}\phantom{PRM}$\rightarrow$\ \apitotalALL\ mismatches in \apicountALL\ apps (\apiprcntALL)} \\
+%& \multicolumn{13}{l}{\rlap{APC}\phantom{PRM}$\rightarrow$\ \apctotalALL\ mismatches in \apccountALL\ apps (\apcprcntALL)} \\
+%& \multicolumn{13}{l}{PRM$\rightarrow$\ \prmcount\ apps exhibiting mismatch (\prmprcnt)} \\
+%& \multicolumn{13}{l}{\rlap{Time}\phantom{PRM}$\rightarrow$\ 6.6s / app on average (1.5s min, 16.8s max)} \\
+%\hline
+%\hline
+
+\end{tabular}
+% GD(API-I): pre=82.69%, rec=93.48%, f-measure=87.75%
+% GC(API-C): pre=100%, rec=95.24%, f-measure=97.56%
+% CiD: pre=21.11%, rec=95%, f-measure=42.85%
+% CIDER: pre=88.89%, rec=19.05%, f-measure=31.38%
+%\begin{tablenotes}
+%\item[1]{\sc CiD} does not detect API callback mismatches.
+%\item[2]{\sc Cider} does not detect API invocation or permissions-related mismatches and was not timed for RQ3.
+%\item[3]{\apptotal\ apps from Androzoo and FDroid, analyzed with \@approach only.}
+%\end{tablenotes}
+%\end{threeparttable}
+%\end{tiny}
+}
+%\vspace{-0.5cm}
+\end{table}
+%\end{sidewaystable}
+
