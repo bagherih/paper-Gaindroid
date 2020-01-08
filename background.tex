@@ -81,6 +81,8 @@ the API than targeted by the app, a mismatch arises
 (the two red regions as shown in
 Figure~\ref{fig:api-mismatch}), which could potentially
 crash the app.
+\commentty{Need to clarify the overriding a callback will cause
+incompatibility, raised by ICSE reviewer1.}
 
 \begin{figure}%{R}{0.5\columnwidth}
     \centering
@@ -254,8 +256,6 @@ mechanism.
 
 \subsection{Limitations of Existing Work}
 
-%\commentty{I suggest we use compare-and-contrast to highlight
-%the novelty of \@approach  using the about examples.}
 
 For existing incompatibility detection techniques to be able
 to identify API and APC issues, they need to be able to
@@ -263,7 +263,7 @@ analyze both the application code and ADF code. Because the
 ADF code can be very large, analyzing it would require a
 significant amount of memory resource that may not be
 feasible. Thus, a state-of-the-art technique called
-\textsc{Cider} conserves memory by creating models from the
+\textsc{Cider} \commentty{need citiation} conserves memory by creating models from the
 underlying ADF to represent API invocations and their
 callback counterparts~\cite{huang2018understanding}.  As
 previously reported, creating models can be a daunting task
@@ -273,23 +273,32 @@ ADFs~\cite{vanderMerwe2012}.  As will be shown later,
 exist in different ADFs.  Moreover, it is only capable of
 detecting compatibility types that have been modeled.
 
-Another approach taken by \textsc{CiD}, another
-state-of-the-art detector, to conserve memory is to extract
-specific API code from the ADF, and then append it to the
-call graph of the application code. However, to reduce
+\tym{Another state-of-the-art  incompatibility detector is \textsc{CiD}. 
+\commentty{add citation}. To  conserve memory, \textsc{CiD} extracts
+specific API code from the ADF, and then appends it to the
+call graph of the application code. } However, to reduce
 memory usage, it only analyzes the initial API call and does
 not analyze subsequent calls within the
-ADF~\cite{lili2018cid}. As will be
+ADF~\cite{lili2018cid}. 
+As will be
 shown later, this approach misses incompatibility issues
 that exist deeper into the ADF code.  
 
-Our approach, \@approach,  can achieve higher
+\tym{
+Compared to the existing work, 
+our approach, \@approach,  can achieve higher
 effectiveness through a more effective memory conservation.
+Specifically,
+}
 \@approach uses reachability analysis to
 incrementally identify pertinent code and then analyze it,
 along with the application code, to detect compatibility
 issues. Thus, our approach focuses its analysis effort on
 relevant portions of the ADF and not the entire ADF.  
+\tym{For example, if an application makes an API call, SAINTdroid identifies the class to which the invoked API belongs, 
+then loads just that class, and continues its analysis into that class. 
+\@approach analysis can seamlessly move between the application code and the ADF code 
+during the compatibility analysis. }
 In the next section, we describe the details of
 \@approach.
 

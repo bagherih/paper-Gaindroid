@@ -41,7 +41,7 @@ data flow analysis on call and data flow graphs of a given
 decompiled APK file to determine references to API methods
 or callbacks.  More precisely, AUM derives an
 inter-procedural control-flow graph, augmented to account
-for implicit invocations. The produced inter-procedural
+for implicit invocations \tym{(e.g., callbacks)}. The produced inter-procedural
 control-flow graph is further annotated with permissions
 required to enact Android API calls. Finally, a reachability
 analysis is conducted over the augmented graph to identify
@@ -117,14 +117,13 @@ remote servers.
 The ARM module derives both the API lifecycle and the permission mapping models through mining of the Android framework revision history.
 It first constructs an API database containing all public APIs defined in Android API levels 2 through 28\footnote{The Android frameworks range from API level 2 through API level 28, collected using {\it sdkmanager}, shipped with the Android SDK Tools to manage packages for the Android SDK~\cite{sdkmanager}. }, allowing \@approach to determine which methods and callbacks exist in each level within the app's supported range. \@approach automatically mines Android framework versions and stores the captured API information in a format that can be effectively queried by both the AMD module to generate the list of APIs in each level and a method call graph for each API method.
 Note that the API database is constructed once for a given framework, i.e., an Android API level, as a reusable model upon which the compatibility analysis of all apps relies.
-The Android revision modeling component to derive the lifetime of each framework's API is realized in an entirely automated fashion, which in turn facilitates supporting the upcoming versions of the framework.
+The Android revision modeling component to derive the lifetime of each framework's API is realized in an entirely automated fashion, which in turn facilitates supporting the upcoming versions of the framework. \tym{Note that ARM differs from the API Lifecyle Modeling (ALM) component of CiD in the following ways: } \commentty{We should explicitly list the differences if there are any.}
 
 
+
+ \@approach next extends the database with mappings between Android API methods and the permissions required by the Android framework during the execution of those methods. To achieve this, ARM relies in part on PScout~\cite{au2012pscout}, one of the most comprehensive permission maps available for the Android framework. The issue in using PScout was that its latest mapping was provided for the Android API level 22. ARM, therefore, extended the latest official release of PScout to include new mappings that would reflect the more up to date Android API levels. Similar to the Android API database, permission maps are constructed once and reused in the subsequent analyses.
  
 
-
- 
-It next extends the database with mappings between Android API methods and the permissions required by the Android framework during the execution of those methods. To achieve this, ARM relies in part on PScout~\cite{au2012pscout}, one of the most comprehensive permission maps available for the Android framework. The issue in using PScout was that its latest mapping was provided for the Android API level 22. ARM, therefore, extended the latest official release of PScout to include new mappings that would reflect the more up to date Android API levels. Similar to the Android API database, permission maps are constructed once and reused in the subsequent analyses.
   
 
 \begin{figure}[t!]%{R}{0.66\textwidth}
