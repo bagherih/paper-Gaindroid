@@ -81,8 +81,7 @@ the API than targeted by the app, a mismatch arises
 (the two red regions as shown in
 Figure~\ref{fig:api-mismatch}), which could potentially
 crash the app.
-\commentty{Need to clarify the overriding a callback will cause
-incompatibility, raised by ICSE reviewer1.}
+%\commentty{Need to clarify the overriding a callback will cause incompatibility, raised by ICSE reviewer1.}
 
 \begin{figure}%{R}{0.5\columnwidth}
     \centering
@@ -262,19 +261,18 @@ to identify API and APC issues, they need to be able to
 analyze both the application code and ADF code. Because the
 ADF code can be very large, analyzing it would require a
 significant amount of memory resource that may not be
-feasible. Thus, a state-of-the-art technique called
-\textsc{Cider} \commentty{need citiation} conserves memory by creating models from the
-underlying ADF to represent API invocations and their
-callback counterparts~\cite{huang2018understanding}.  As
-previously reported, creating models can be a daunting task
+feasible. Thus, a state-of-the-art technique, called
+\textsc{Cider}~\cite{huang2018understanding}, conserves memory by creating models from the underlying ADF to represent API invocations and their
+callback counterparts.  
+As previously reported, creating models can be a daunting task
 that may not be able to keep up with rapid releases of
 ADFs~\cite{vanderMerwe2012}.  As will be shown later,
 \textsc{Cider} can miss detecting compatibility issues that
 exist in different ADFs.  Moreover, it is only capable of
 detecting compatibility types that have been modeled.
 
-\tym{Another state-of-the-art  incompatibility detector is \textsc{CiD}. 
-\commentty{add citation}. To  conserve memory, \textsc{CiD} extracts
+\textcolor{blue}{
+Another state-of-the-art  incompatibility detector is \textsc{CiD}\cite{lili2018cid}. To  conserve memory, \textsc{CiD} extracts
 specific API code from the ADF, and then appends it to the
 call graph of the application code. } However, to reduce
 memory usage, it only analyzes the initial API call and does
@@ -284,7 +282,7 @@ As will be
 shown later, this approach misses incompatibility issues
 that exist deeper into the ADF code.  
 
-\tym{
+\textcolor{blue}{
 Compared to the existing work, 
 our approach, \@approach,  can achieve higher
 effectiveness through a more effective memory conservation.
@@ -295,7 +293,7 @@ incrementally identify pertinent code and then analyze it,
 along with the application code, to detect compatibility
 issues. Thus, our approach focuses its analysis effort on
 relevant portions of the ADF and not the entire ADF.  
-\tym{For example, if an application makes an API call, SAINTdroid identifies the class to which the invoked API belongs, 
+\textcolor{blue}{For example, if an application makes an API call, SAINTdroid identifies the class to which the invoked API belongs, 
 then loads just that class, and continues its analysis into that class. 
 \@approach analysis can seamlessly move between the application code and the ADF code 
 during the compatibility analysis. }

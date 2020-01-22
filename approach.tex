@@ -41,7 +41,7 @@ data flow analysis on call and data flow graphs of a given
 decompiled APK file to determine references to API methods
 or callbacks.  More precisely, AUM derives an
 inter-procedural control-flow graph, augmented to account
-for implicit invocations \tym{(e.g., callbacks)}. The produced inter-procedural
+for implicit invocations (e.g., callbacks). The produced inter-procedural
 control-flow graph is further annotated with permissions
 required to enact Android API calls. Finally, a reachability
 analysis is conducted over the augmented graph to identify
@@ -117,7 +117,7 @@ remote servers.
 The ARM module derives both the API lifecycle and the permission mapping models through mining of the Android framework revision history.
 It first constructs an API database containing all public APIs defined in Android API levels 2 through 28\footnote{The Android frameworks range from API level 2 through API level 28, collected using {\it sdkmanager}, shipped with the Android SDK Tools to manage packages for the Android SDK~\cite{sdkmanager}. }, allowing \@approach to determine which methods and callbacks exist in each level within the app's supported range. \@approach automatically mines Android framework versions and stores the captured API information in a format that can be effectively queried by both the AMD module to generate the list of APIs in each level and a method call graph for each API method.
 Note that the API database is constructed once for a given framework, i.e., an Android API level, as a reusable model upon which the compatibility analysis of all apps relies.
-The Android revision modeling component to derive the lifetime of each framework's API is realized in an entirely automated fashion, which in turn facilitates supporting the upcoming versions of the framework. \tym{Note that ARM differs from the API Lifecyle Modeling (ALM) component of CiD in the following ways: } \commentty{We should explicitly list the differences if there are any.}
+The Android revision modeling component to derive the lifetime of each framework's API is realized in an entirely automated fashion, which in turn facilitates supporting the upcoming versions of the framework. %\tym{Note that ARM differs from the API Lifecyle Modeling (ALM) component of CiD in the following ways: } \commentty{We should explicitly list the differences if there are any.}
 
 
 
