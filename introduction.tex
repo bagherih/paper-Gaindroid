@@ -75,19 +75,57 @@ Different from all these techniques, \@approach overcomes such scalability issue
 %\commentty{We need to revise the above sentence ---  ICSE reviewer 1 says CiD does not analyze only the application code.}
 %Third, incrementally loading and analyzing classes allows our technique to be remarkably faster and more scalable than the state-of-the-art in compatibility detection.
 
-\textcolor{blue}{
-\@approach has several advantages over existing work. First, unlike prior techniques that focus on specific types of APIs, our approach has the potential to greatly increase the scope of analysis by automatically and effectively analyzing all of the APIs in an ADF version. 
-Second, incrementally loading and analyzing classes allows our technique to be remarkably faster and more scalable than the state-of-the-art in compatibility detection.
-Third, \@approach holistically analyzes application and ADF in tandem by gradually loading and analyzing classes as needed during the compatibility analysis. \@approach analysis, thus, can seamlessly move between the application code and the ADF code during the compatibility analysis. Whereas prior techniques first analyze the ADF code, the results of which are subsequently used to resolve the API usages~\cite{huang2018understanding,linttips, lili2018cid}.
-}
+%\textcolor{blue}{ \@approach has several advantages
+%over existing work.  First, unlike prior techniques
+%that focus on specific types of APIs, our approach has
+%the potential to greatly increase the scope of analysis
+%by automatically and effectively analyzing all of the
+%APIs in an ADF version.  Second, incrementally loading
+%and analyzing classes allows our technique to be
+%remarkably faster and more scalable than the
+%state-of-the-art in compatibility detection.  Third,
+%\@approach holistically analyzes application and ADF in
+%tandem by gradually loading and analyzing classes as
+%needed during the compatibility analysis. \@approach
+%analysis, thus, can seamlessly move between the
+%application code and the ADF code during the
+%compatibility analysis.  Whereas prior techniques first
+%analyze the ADF code, the results of which are
+%subsequently used to resolve the API
+%usages~\cite{huang2018understanding,linttips,
+%lili2018cid}.  }
 
-Our evaluation of \@approach against the state-of-the-art analysis
-techniques using thousands of real-world Android apps indicates that 
+\@approach has several advantages over existing work.
+First, \@approach holistically analyzes application and
+ADF in tandem by gradually loading and analyzing
+classes as needed during the compatibility analysis.
+\@approach analysis, thus, can seamlessly move between
+the application code and the ADF code during the
+compatibility analysis.  Whereas prior techniques first
+analyze the ADF code, the results of which are
+subsequently used to resolve the API
+usages~\cite{huang2018understanding,linttips,
+lili2018cid}. Second, by actually analyzing app and ADF
+code, our approach has the potential to greatly
+increase the scope of analysis by automatically and
+effectively analyzing all code in the utilized APIs in
+an ADF version.  Prior techniques only focus on
+specific types of APIs.  Third, incrementally loading
+and analyzing classes allows our technique to be
+remarkably faster and more scalable than the
+state-of-the-art in compatibility detection.  
+
+Our evaluation of \@approach against the
+state-of-the-art analysis techniques using thousands of
+real-world Android apps indicates that 
 %Our experiments indicate that 
-\@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms. 
-It also successfully detects permission-induced mismatches that cannot be even detected by state-of-the-art techniques.
-In addition, \@approach is  up to 8.3 times (four times on average) faster than
-the state-of-the art techniques. 
+\@approach is up to 76\% more successful in detecting
+compatibility issues, while issuing significantly less
+(11-52\%) false alarms.  It also successfully detects
+permission-induced mismatches that cannot be even
+detected by state-of-the-art techniques.  In addition,
+\@approach is  up to 8.3 times (four times on average)
+faster than the state-of-the art techniques. 
 
 
 %\commentty{Can we put the actual numbers here? E.g., the improvement of incompatibility detection,  performance gain, etc.}
