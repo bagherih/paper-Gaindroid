@@ -68,20 +68,20 @@ developed independently by other research groups.
 %containing ICC based privacy leaks for which all
 %vulnerabilities are known in advance—establishing a
 %ground truth.
-\commentty{The ICSE reviewer 1 noted that Cider did not evaluate
-recall, so he/she does not think \textsc{Cider}-Bench
-has ground truths. We should clarify.}
+\commentty{The ICSE reviewer 1 noted that Cider did not
+evaluate recall, so he/she does not think
+\textsc{Cider}-Bench has ground truths. We should
+clarify.}
 %
 \textsc{CiD}-Bench contains seven benchmark apps and
 \textsc{Cider}-Bench contains 20 apps.  The authors of
-these benchmarks report known vulnerabilities as part
-of the benchmarks. These vulnerabilities serve as our
-evaluation baseline. For example, we evaluate the
-effectiveness of our approach by observing the number
-of reported vulnerabilities in these two benchmarks
-that \@approach can detect. If our approach detects
-a new issue, we manually inspect whether the
-issue is real.  
+these benchmarks also reported known vulnerabilities.
+We use these vulnerabilities as our evaluation
+baseline. For example, we evaluate the effectiveness of
+our approach by observing the number of reported
+vulnerabilities in these two benchmarks that \@approach
+can detect. If our approach detects a new issue, we
+manually inspect whether the issue indeed exists.  
 %
 \commentws{See above whether my explanation is
 sufficient.}
@@ -95,15 +95,18 @@ from 10,400 to 294,400 lines of Dex code and up to tens
 of thousands of methods. The benchmark apps both
 support and target a variety of API levels, with
 minimum levels ranging from 10 to 21 and targets
-ranging from level 23 to 27.  
-One of our baseline system, i.e. \textsc{Lint},
-requires building the apps to perform the compatibility
-analysis. Out of the 27 benchmark apps, eight apps
-cannot be built\footnote{The benchmark apps were built using Gradle~\cite{Gradle}, which dropped support of some Android SDK tool chains. Even with the appropriate SDKs in place on two different systems, Gradle were unable to build the apps.}; therefore, they are excluded from the
-analysis, leaving the total of \rqoneapps~apps used in
-our~comparative~study.
-Using the same benchmark
-apps as prior research allows us to compare our results
+ranging from level 23 to 27.  One of our baseline
+system, i.e. \textsc{Lint}, requires building the apps
+to perform the compatibility analysis. Out of the 27
+benchmark apps, eight apps cannot be built\footnote{The
+benchmark apps were built using Gradle~\cite{Gradle},
+which dropped support of some Android SDK tool chains.
+Even with the appropriate SDKs in place on two
+different systems, Gradle were unable to build the
+apps.}; therefore, they are excluded from the analysis,
+leaving the total of \rqoneapps~apps used in
+our~comparative~study.  Using the same benchmark apps
+as prior research allows us to compare our results
 against them and help eradicate internal threats to the
 validity of our results.
 
