@@ -271,7 +271,7 @@ ADFs~\cite{vanderMerwe2012}.  As will be shown later,
 exist in different ADFs.  Moreover, it is only capable of
 detecting compatibility types that have been modeled.
 
-\textcolor{red}{
+%\textcolor{red}{
 Another state-of-the-art incompatibility detector is
 \textsc{CiD}\cite{lili2018cid}. This approach creates a
 \emph{conditional call graph} for each app to record
@@ -288,9 +288,10 @@ does not analyze subsequent calls within the
 ADF~\cite{lili2018cid}.  As will be shown later, this
 approach misses incompatibility issues that exist
 deeper into the ADF code.  
-}
+%}
 
-\textcolor{red}{ Compared to \textsc{CiD}, our approach
+%\textcolor{red}{ 
+Compared to \textsc{CiD}, our approach
 gradually loads and analyzes classes from the
 application code and ADF code.  For example, if an
 application makes an API call, \@approach identifies
@@ -307,5 +308,6 @@ achieve higher effectiveness to detect different types
 of API compatibility issues. It also performs more
 straightfoward analysis with fewer analysis passes,
 resulting better memory conservation.  In the next
-section, we describe the details of \@approach.  }
+section, we describe the details of \@approach.  
+%}
 
