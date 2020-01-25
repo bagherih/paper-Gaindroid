@@ -271,32 +271,41 @@ ADFs~\cite{vanderMerwe2012}.  As will be shown later,
 exist in different ADFs.  Moreover, it is only capable of
 detecting compatibility types that have been modeled.
 
-\textcolor{blue}{
-Another state-of-the-art  incompatibility detector is \textsc{CiD}\cite{lili2018cid}. To  conserve memory, \textsc{CiD} extracts
-specific API code from the ADF, and then appends it to the
-call graph of the application code. } However, to reduce
-memory usage, it only analyzes the initial API call and does
-not analyze subsequent calls within the
-ADF~\cite{lili2018cid}. 
-As will be
-shown later, this approach misses incompatibility issues
-that exist deeper into the ADF code.  
-
-\textcolor{blue}{
-Compared to the existing work, 
-our approach, \@approach,  can achieve higher
-effectiveness through a more effective memory conservation.
-Specifically,
+\textcolor{red}{
+Another state-of-the-art incompatibility detector is
+\textsc{CiD}\cite{lili2018cid}. This approach creates a
+\emph{conditional call graph} for each app to record
+method call information along with conditions checkers
+related to API level. The construction of this graph is
+done by performing an analysis path to identify API
+calls. From each API call, \textsc{CiD} performs
+backward data-flow analysis to identify the presence of
+an API level check. Resolving API usage is then based
+on the list of API calls and information from the
+\emph{conditional call graph}.  To reduce memory usage,
+\textsc{CiD} only analyzes the initial API call and
+does not analyze subsequent calls within the
+ADF~\cite{lili2018cid}.  As will be shown later, this
+approach misses incompatibility issues that exist
+deeper into the ADF code.  
 }
-\@approach uses reachability analysis to
-incrementally identify pertinent code and then analyze it,
-along with the application code, to detect compatibility
-issues. Thus, our approach focuses its analysis effort on
-relevant portions of the ADF and not the entire ADF.  
-\textcolor{blue}{For example, if an application makes an API call, SAINTdroid identifies the class to which the invoked API belongs, 
-then loads just that class, and continues its analysis into that class. 
-\@approach analysis can seamlessly move between the application code and the ADF code 
-during the compatibility analysis. }
-In the next section, we describe the details of
-\@approach.
+
+\textcolor{red}{ Compared to \textsc{CiD}, our approach
+gradually loads and analyzes classes from the
+application code and ADF code.  For example, if an
+application makes an API call, \@approach identifies
+the class to which the invoked API belongs, then loads
+just that class, and continues its analysis into that
+class to detect the presence of API level checks and
+any other issues that we wish to detect.  As such,
+\@approach analysis can seamlessly 
+%move between the application code and the ADF code,
+%and 
+produce a method-call graph that includes methods from
+both app and ADF classes.  \@approach, therefore, can
+achieve higher effectiveness to detect different types
+of API compatibility issues. It also performs more
+straightfoward analysis with fewer analysis passes,
+resulting better memory conservation.  In the next
+section, we describe the details of \@approach.  }
 
