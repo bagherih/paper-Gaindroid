@@ -2,6 +2,7 @@
 %\documentclass{llncs}
 %\documentclass[format=acmsmall]{acmart}
 \documentclass[sigconf,review]{acmart}
+%\documentclass[sigconf,review, anonymous]{acmart}
 \usepackage[noend]{algpseudocode}
 \usepackage{standalone}
 \usepackage{algorithm}
@@ -76,6 +77,9 @@
 \def \@approach{\textsc{SAINTdroid}}
 \def \apptotal {3,571}
 
+
+\acmConference[ISSTA 2020]{ACM SIGSOFT International Symposium on Software Testing and Analysis}{18--22 July, 2020}{Los Angeles, US}
+
 \input{kotlin}
 
 %\linespread{0.985}
@@ -104,11 +108,10 @@ paper, we present \@approach, a new analysis approach that
 automatically detects all types of mismatches to which an
 app may be vulnerable across versions of the Android API it
 declaratively supports. 
-%We applied \@approach to 3,590 apps and compared the results of our analysis against state-of-the-art tools. The experimental results corroborate its ability to outperform the existing techniques in terms of both the number and type of mismatches correctly identified  as well as run-time performance of the analysis.  
-%The results of our experiments, conducted over thousands of real-world apps, 
 We applied \@approach to 3,590 real-world apps and compared the results of our analysis against the state-of-the-art techniques,
 which corroborates that \@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms.
 We also show that our approach, which gradually loads and analyzes classes as needed, remarkably outperforms the existing techniques in terms of scalability.
+%We applied \@approach to 3,590 apps and compared the results of our analysis against state-of-the-art tools. The experimental results corroborate its ability to outperform the existing techniques in terms of both the number and type of mismatches correctly identified  as well as run-time performance of the analysis.  
 
 \end{abstract}
 
