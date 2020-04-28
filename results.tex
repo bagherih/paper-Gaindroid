@@ -227,9 +227,6 @@ can efficiently vet Android apps for compatibility issues in
 a fraction of time taken by the other state-of-the-art
 tools.
 
-
-
-
 Figure~\ref{fig:scatterplot} presents the time taken by \@approach 
 to perform compatibility analysis on real-world apps.
 The scatter plot depicts both the analysis time and the app size.  
@@ -241,7 +238,9 @@ to 37.8 seconds), 29.5 seconds (ranging from 4.1 to
 75.6 seconds), respectively. We have found outliers during the analysis. For example, the app in the top left corner in Figure~\ref{fig:scatterplot} is a game application which extensively uses third party libraries, which took a considerable amount of time for the analyzer to compute the data structures required for the compatibility analysis, despite its small KLOC. On the other hand, the app in the right side of the diagram, closer to 80 KLOC, loads three times less library classes than the aforementioned app, implicating in less complex graphs to analyze.  
 Overall, the timing results show that \@approach  is up to 8.3 times (4.7 times on average) faster than the state-of-the art techniques, and is able to complete analysis of real-world apps in just a few seconds (on an ordinary laptop), confirming that the presented technology is indeed feasible in practice for real-world usage.
 
- 
+\commentty{what aspects of \@approach made it faster than existing techniques?
+The contribution in terms of ``scalability" should be assessed here.}
+
 
 \begin{figure}[b!]
 	\centering
