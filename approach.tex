@@ -1,25 +1,89 @@
 
 \section{Approach}\label{sec-approach}
 
-This section overviews our approach to automatically detect all three types of API-
-and permission-induced mismatches described in Table
-\ref{tab:api-mismatch}.
-%We present a method for identifying the three types of API and permission-based mismatches described in Table \ref{tab:api-mismatch}.  Our approach is realized in \@approach, a static analysis tool capable of detecting all three types of incompatibility.
-As depicted in Figure~\ref{fig:arch},  \@approach takes as
-input an app APK\footnote{APK is an app bytecode package used to distribute and install an Android application.} 
-along with a set of Android framework
-versions, and produces a list of mismatches for the given
-Android app.  %The Android frameworks range from API level 2 through API level 28, collected using {\it sdkmanager}, shipped with the Android SDK Tools to manage packages for the Android SDK~\cite{sdkmanager}. 
-\@approach
-comprises three main components:
-(1) The \textit{API usage modeler (AUM)} that utilizes different static analysis techniques, i.e., control flow and data flow analyses, to  identify the API call sites and the concomitant conditions thereof;
-(2) The \textit{Android revision modeler (ARM)} 
-that extracts essential information about the framework APIs' lifetime and mappings between Android API calls and the permissions required to perform those calls
-from the Android framework revision history;
-(3) The \textit{Android mismatch detector (AMD)} that
-leverages the artifacts produced by AUM and ARM components to effectively detect API- and permission-related mismatches in the app under analysis.
+\commentws{ As previously mentioned, one major
+short-coming of the state-of-the-art approaches in
+detecting API compatibility issues is their inability
+to analyze application-under-analysis and the
+underlying ADF code in unison. As shown in
+Figure~\ref{fig:compare}a, these approaches perform
+analysis in two steps: analyzing the app and modeling
+the ADFs.  They then perform another layer of analysis
+that consider both results to detect API compatibility
+issues. In doing so, these approaches can miss
+detecting issues that lie deeper into the ADFs.   
 
-In the rest of this section, we describe the details of each component in turn.
+
+\@approach, on the other hand, can analyze the
+application and ADF code in unison by utilizing a novel
+class-loader-based program analysis approach. A
+class-loader is a runtime component that is part of any
+Java or Android Virtual Machine. It is responsible for
+incrementally loading any class needed during
+execution. It can accomplish this because of Java
+partition code into classes that can be individually
+loaded. \textit{\@approach adapts this runtime
+concept to support its scalable static analysis.} 
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{images/differences.pdf}
+    \vspace{-0.2cm}
+    \caption{Comparing Existing Approaches with \@approach}
+    \label{fig:compare}
+    \vspace{-0.3cm}
+\end{figure}
+
+\subsection{AUM: API Usage Modeler}
+\label{API Usage Extraction}
+
+In a nutshell, \@approach utilizes a \emph{ClassLoader
+Virtual Machine} (\emph{CLVM}) to perform class-based
+reachability analysis~\cite{tsutano2017efficient}.
+\emph{CLVM} takes advantage of code structure in Java
+to locate and load classes that can be reachable within
+a program.  As an example, if an application method
+calls an Android API, the class to which the API
+belongs would be loaded.  By utilizing CLVM, \@approach
+, as shown in Figure~\ref{fig:compare}b, analyzes the application classes and only the reachable
+ADF classes, and not the entire ADF code. This analysis
+approach significantly reduces both peak memory
+footprint and memory consumption over time (as will be
+shown later).  Currently, \@approach can only analyze
+Dex code; it does not support the loading and analysis
+of native code.  
+
+The rest of this section overviews our approach,
+leveraging CLVM to automatically detect all three types
+of API- and permission-induced mismatches described in
+Table~\ref{tab:api-mismatch}. As depicted in
+Figure~\ref{fig:arch}, \@approach takes as input an app
+APK\footnote{APK is an app bytecode package used to
+distribute and install an Android application.} along
+with a set of Android framework versions, and produces
+a list of mismatches for the given Android app.  
+\@approach comprises three main components:
+}
+
+(1) The \textit{API usage modeler (AUM)} that utilizes
+different static analysis techniques, i.e., control
+flow and data flow analyses, to  identify the API call
+sites and the concomitant conditions thereof; 
+
+(2) The \textit{Android revision modeler (ARM)} that
+extracts essential information about the framework
+APIs' lifetime and mappings between Android API calls
+and the permissions required to perform those calls
+from the Android framework revision history;
+
+(3) The \textit{Android mismatch detector (AMD)} that
+leverages the artifacts produced by AUM and ARM
+components to effectively detect API- and
+permission-related mismatches in the app under
+analysis.
+
+Next, we describe the details of each component in
+turn.
  
 
 \begin{figure}[t!]
@@ -31,7 +95,6 @@ In the rest of this section, we describe the details of each component in turn.
     \label{fig:arch}
     \vspace{-0.3cm}
 \end{figure}
-
 
 \subsection{AUM: API Usage Modeler}
 \label{API Usage Extraction}
@@ -48,28 +111,34 @@ analysis is conducted over the augmented graph to identify
 the guards that encompass the execution paths reaching the
 annotated API calls or permission-required functionalities. 
 
-\commentty{Need more details on the analysis algorithm. We also need
-to clarify the technical challenges and our unique contributions.}
+\commentty{Need more details on the analysis algorithm.
+We also need to clarify the technical challenges and
+our unique contributions.} 
+
+\commentws{I add a few paragraphs to explain how our
+analysis works differently than the exising state of
+the art in background (at the end) and approach (at the
+beginning). Please check to see if you think they
+answer all the reviewer's comments from the past.}
 
 \@approach's compatibility analysis has three major
-advantages over the state-of-the-art approaches.  First,  to
-render our analysis more \emph{effective, efficient, and
-scalable}, 
-%code or ~\cite{soot,desnos2013androguard}, used by the
-%state-of-the-art compatibility detection techniques, 
-\@approach's AUM module employs an approach that
-incrementally discovers pertinent classes via reachability
-analysis~\cite{tsutano2017efficient}.  It then analyzes only
-these classes. This, in turn, allows our technique to be
-significantly faster and more space efficient than the
-state-of-the-art in compatibility analysis, without
-sacrificing its capability in detecting compatibility
-issues, as evidenced by the experimental results (cf.
-Section~\ref{sec-eval}).  Some existing state-of-the-art
+advantages over the state-of-the-art approaches.
+First,  to render our analysis more \emph{effective,
+efficient, and scalable}, \@approach's AUM module
+employs an approach that incrementally discovers
+pertinent classes via reachability
+analysis~\cite{tsutano2017efficient}.  It then analyzes
+only these classes. This, in turn, allows our technique
+to be significantly faster and more space efficient
+than the state-of-the-art in compatibility analysis,
+without sacrificing its capability in detecting
+compatibility issues, as evidenced by the experimental
+results (cf.  Section~\ref{sec-eval}).  Some existing
+state-of-the-art
 techniques~\cite{huang2018understanding,he2018understanding},
-on the other hand, directly load the entire code base into
-memory, and thereby facing difficulties in handling large
-scale libraries such as ADF. 
+on the other hand, directly load the entire code base
+into memory, and thereby facing difficulties in
+handling large scale libraries such as ADF. 
 
 %---\@approach's AUM module incrementally loads and analyzes
 %classes 

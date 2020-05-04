@@ -254,22 +254,48 @@ crashes when its tries to load data from the storage
 mechanism.
 
 \subsection{Limitations of Existing Work}
+\commentws{
+One major short-coming of the state-of-the-art
+approaches in detecting API compatibility issues is
+their inability to analyze application-under-analysis
+and the underlying ADF code in unison.  Existing
+program analysis approaches operate like a compiler;
+that is, it first loads all code in the project and
+then performs analysis on the loaded code.  This
+approach is monolithic and can be memory intensive.
+For an existing state-of-the-art technique
+to support the analysis of application and ADF in
+unison, it would need to load the application and the
+ADF code together as part of the analysis. Loading both
+components is not feasible due to high memory 
+consumption. As such, they analyze an app and the
+underlying ADF separately.
 
+Existing techniques also face another challenge when 
+analyzing the ADF code. For example, \textsc{Soot}, a
+widely used Java program analysis framework, starts its
+analysis from the \texttt{main} method in each program.
+When \textsc{FlowDroid} adapts \textsc{Soot} to analyze
+Android apps that can have multiple entry points,
+\textsc{FlowDroid} developers created a workaround
+utilizing dummy \texttt{main} methods. Such an approach
+is not suitable for analyzing the ADF as it has no
+\texttt{main} method, and an entry point can be any
+supported API. As such, existing techniques model the
+ADF code to perform analysis. 
+}
 
-For existing incompatibility detection techniques to be able
-to identify API and APC issues, they need to be able to
-analyze both the application code and ADF code. Because the
-ADF code can be very large, analyzing it would require a
-significant amount of memory resource that may not be
-feasible. Thus, a state-of-the-art technique, called
-\textsc{Cider}~\cite{huang2018understanding}, conserves memory by creating models from the underlying ADF to represent API invocations and their
-callback counterparts.  
-As previously reported, creating models can be a daunting task
+For example, a state-of-the-art technique, called
+\textsc{Cider}~\cite{huang2018understanding}, creates
+models of the underlying ADF to represent API
+invocations and their callback counterparts.  However,
+constructing a complete ADF model can be laborious task
 that may not be able to keep up with rapid releases of
-ADFs~\cite{vanderMerwe2012}.  As will be shown later,
-\textsc{Cider} can miss detecting compatibility issues that
-exist in different ADFs.  Moreover, it is only capable of
-detecting compatibility types that have been modeled.
+ADFs~\cite{vanderMerwe2012}.  Thus, these analysis
+techniques use abstract models that are inexpensive to
+build, but they also lack finer details.  As will be
+shown later, \textsc{Cider} can miss detecting
+compatibility issues that exist in different ADFs.
 
 %\textcolor{red}{
 Another state-of-the-art incompatibility detector is
@@ -288,26 +314,26 @@ does not analyze subsequent calls within the
 ADF~\cite{lili2018cid}.  As will be shown later, this
 approach misses incompatibility issues that exist
 deeper into the ADF code.  
+
+In the next section, we describe how \@approach
+overcomes these limitations to provide more capability
+and accuracy in detecting API compatibility issues. 
 %}
 
-%\textcolor{red}{ 
-Unlike \textsc{CiD}, our approach
-gradually loads and analyzes classes from the
-application code and ADF code.  For example, if an
-application makes an API call, \@approach identifies
-the class to which the invoked API belongs, then loads
-just that class, and continues its analysis into that
-class to detect the presence of API level checks and
-any other issues that we wish to detect.  As such,
-\@approach analysis can seamlessly 
-%move between the application code and the ADF code,
-%and 
-produce a method-call graph that includes methods from
-both app and ADF classes.  \@approach, therefore, can
-achieve higher effectiveness to detect different types
-of API compatibility issues. It also performs more
-straightforward analysis with fewer analysis passes,
-resulting better memory conservation.  In the next
-section, we describe the details of \@approach.  
-%}
-
+%Unlike \textsc{CiD}, our approach
+%gradually loads and analyzes classes from the
+%application code and ADF code.  For example, if an
+%application makes an API call, \@approach identifies
+%the class to which the invoked API belongs, then loads
+%just that class, and continues its analysis into that
+%class to detect the presence of API level checks and
+%any other issues that we wish to detect.  As such,
+%\@approach analysis can seamlessly 
+%produce a method-call graph that includes methods from
+%both app and ADF classes.  \@approach, therefore, can
+%achieve higher effectiveness to detect different types
+%of API compatibility issues. It also performs more
+%straightforward analysis with fewer analysis passes,
+%resulting better memory conservation.  In the next
+%section, we describe the details of \@approach.  
+%
