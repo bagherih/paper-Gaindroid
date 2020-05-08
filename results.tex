@@ -211,35 +211,44 @@ updating the app to use runtime permissions and setting the
 %\vspace{-7pt}
 \subsection{RQ3: Performance} % and Timing}
 
-Table~\ref{tab:tab-timing-results} shows the analysis times
-of \@approach, {\sc CiD}, and {\sc Lint} (in seconds).
-Dashes indicate that either the corresponding technique fails to produce analysis
+Table~\ref{tab:tab-timing-results} shows the analysis
+times of \@approach, {\sc CiD}, and {\sc Lint} (in
+seconds).  Dashes indicate that either the
+corresponding technique fails to produce analysis
 results after 600 seconds or crashes.
 %timeouts.  after 10 minutes of analysis.
 As shown, the analysis time taken by \@approach is
 significantly lower than those of \textsc{CiD} and
 \textsc{Lint} for almost all the apps. Also note that
-\textsc{CiD} fails to completely analyze four apps. %after 600 seconds have passed. 
-The average analysis time taken by
-\@approach, {\sc CiD}, and {\sc Lint} per app is 5.7, 22.9
-and 17.1 seconds respectively, corroborating that \@approach
-can efficiently vet Android apps for compatibility issues in
-a fraction of time taken by the other state-of-the-art
-tools.
+\textsc{CiD} fails to completely analyze four apps.
 
-Figure~\ref{fig:scatterplot} presents the time taken by \@approach 
-to perform compatibility analysis on real-world apps.
-The scatter plot depicts both the analysis time and the app size.  
-The experimental results show that the average 
-analysis time taken by \@approach, {\sc CiD}, and {\sc Lint} per app on
+Figure~\ref{fig:scatterplot} presents the time taken by
+\@approach to perform compatibility analysis on
+real-world apps.  The scatter plot depicts both the
+analysis time and the app size.  The experimental
+results show that the average analysis time taken by
+\@approach, {\sc CiD}, and {\sc Lint} per app on
 real-world data sets is 6.2 seconds (ranging from 1.6
 to 37.8 seconds), 29.5 seconds (ranging from 4.1 to
 78.4 seconds), and 24.7 seconds (ranging from 4.7 to
-75.6 seconds), respectively. We have found outliers during the analysis. For example, the app in the top left corner in Figure~\ref{fig:scatterplot} is a game application which extensively uses third party libraries, which took a considerable amount of time for the analyzer to compute the data structures required for the compatibility analysis, despite its small KLOC. On the other hand, the app in the right side of the diagram, closer to 80 KLOC, loads three times less library classes than the aforementioned app, implicating in less complex graphs to analyze.  
-Overall, the timing results show that \@approach  is up to 8.3 times (4.7 times on average) faster than the state-of-the art techniques, and is able to complete analysis of real-world apps in just a few seconds (on an ordinary laptop), confirming that the presented technology is indeed feasible in practice for real-world usage.
-
-\commentty{what aspects of \@approach made it faster than existing techniques?
-The contribution in terms of ``scalability" should be assessed here.}
+75.6 seconds), respectively. We have found outliers
+during the analysis. For example, the app in the top
+left corner in Figure~\ref{fig:scatterplot} is a game
+application which extensively uses third party
+libraries, which took a considerable amount of time for
+the analyzer to compute the data structures required
+for the compatibility analysis, despite its small KLOC.
+On the other hand, the app in the right side of the
+diagram, closer to 80 KLOC, loads three times less
+library classes than the aforementioned app,
+implicating in less complex graphs to analyze.
+Overall, the timing results show that \@approach  is up
+to 8.3 times (4.7 times on average) faster than the
+state-of-the art techniques, and is able to complete
+analysis of real-world apps in just a few seconds (on
+an ordinary laptop), confirming that the presented
+technology is indeed feasible in practice for
+real-world usage.
 
 
 \begin{figure}[b!]
@@ -278,6 +287,30 @@ Indeed, for over 60\% of the analyzed apps, \@approach loads less than 1,000 cla
 
 Loading fewer classes also allows \@approach to require less memory to perform its analysis. To investigate this matter, we also 
 \end{comment}
-Specifically, we
-monitored the memory footprint required by each approach for performing analysis. Figure~\ref{fig:memory_gd} shows a comparison of how much memory \@approach and {\sc CiD} are using during the analysis of real-world apps. According to the results, \@approach on average requires 329 MB (ranging from 119MB to 898MB) of memory to perform the compatibility analysis. On the other hand, {\sc CiD} on average uses 1.3 GB (or four times more memory) to perform the same analysis. We interpret this data as corroborating  the effectiveness of our technique in practice  %based on a class-loader based approach 
-for compatibility analysis.
+
+Specifically, we monitored the memory footprint
+required by each approach for performing analysis.
+Figure~\ref{fig:memory_gd} shows a comparison of how
+much memory \@approach and {\sc CiD} are using during
+the analysis of real-world apps. According to the
+results, \@approach on average requires 329 MB (ranging
+from 119MB to 898MB) of memory to perform the
+compatibility analysis. On the other hand, {\sc CiD} on
+average uses 1.3 GB (or four times more memory) to
+perform the same analysis.  We interpret this data as
+corroborating  the effectiveness of our technique in
+practice for compatibility analysis.
+
+\commentws{ By performing analysis incrementally, the
+analysis cost is amortized over time.  This also
+results in shorter start up time as only a small
+portion of the code is needed to begin analysis.
+\textsc{Semeo} can perform analysis in one pass whereas
+\textsc{CID} needs two passes to detect compatibility
+issues (see Section~\ref{limitations}). These factors
+make our approach highly efficient.  Furthermore, the
+amount of memory that must be committed to store code
+and perform incremental analysis is also small,
+resulting in fewer page faults and more available
+memory to support analysis. This can enhance the
+scalability of our approach.  }

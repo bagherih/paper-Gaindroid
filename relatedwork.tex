@@ -4,42 +4,47 @@ Android incompatibility issues have received a lot of
 attention recently. Here, we provide a discussion of the
 related efforts in light of our research.
 
-\textbf{API evolution}. A large body of existing research
-focuses on the evolving nature of APIs, which is an
-important aspect of software
+\textbf{API evolution}. A large body of existing
+research focuses on the evolving nature of APIs, which
+is an important aspect of software
 maintenance~\cite{mcdonnell2013empirical},
-\cite{bavota2015impact}, \cite{ACRYL_Scalabrino2019}, \cite{li2018characterising},
-\cite{lamothe2018exploring}, \cite{linares2013api}, \cite{Luo2018},
+\cite{bavota2015impact}, \cite{ACRYL_Scalabrino2019},
+\cite{li2018characterising},
+\cite{lamothe2018exploring}, \cite{linares2013api},
+\cite{Luo2018},
 \cite{Fazzini:2017:ACI:3155562.3155604},
-\cite{mahmoudi2018android}, \cite{mutchler2016target}. These
-research efforts  explore the problems that are introduced
-by API changes. Among others, McDonnell et
-al.~\cite{mcdonnell2013empirical} studied Android's fast API
-evolution (115 API updates/month), and and noticed developers'
-hesitation in embracing the fast-evolving APIs. The results
-of this study suggest that API updates are more defect-prone
-than other types of changes, which might cause application
-instability and potential vulnerabilities~\cite{linares2013api}.
-Mutchler et al.~\cite{mutchler2016target} explored the consequences of
-running applications targeted to older Android versions on
-devices employing recent Android versions, and how it can
-introduce serious security issues. Li et al.
-\cite{li2018characterising} investigated the frequency with
-which deprecated APIs are used in the development of Android
-apps, considering the deprecated APIs' annotations,
-documentations, and removal consequences along with
-developers' reactions to APIs deprecations. Bavota et al.
-\cite{bavota2015impact} showed that applications with higher
-user ratings use APIs that are less change- and fault-prone
-compared to the applications with lower ratings. 
-
+\cite{mahmoudi2018android}, \cite{mutchler2016target}.
+These research efforts explore problems due to API
+changes. Among others, McDonnell et
+al.~\cite{mcdonnell2013empirical} studied Android's
+fast API evolution (115 API updates/month), and noticed
+developers' hesitation in embracing the fast-evolving
+APIs because they can be more defect-prone than other
+types of changes, which might cause application
+instability and potential
+vulnerabilities~\cite{linares2013api}.  
+Bavota et al.  \cite{bavota2015impact}
+showed that applications with higher user ratings use
+APIs that are less change- and fault-prone compared to
+the applications with lower ratings. 
+%Mutchler et al.~\cite{mutchler2016target} explored the consequences
+%of running applications targeted to older Android
+%versions on devices with recent Android versions,
+%and how it can introduce serious security issues. 
+Li et al.  \cite{li2018characterising} investigated the
+frequency with which deprecated APIs are used in the
+development of Android apps, considering the deprecated
+APIs' annotations, documentations, and removal
+consequences along with developers' reactions to APIs
+deprecations. 
 %
-
+%
+%
 %\textcolor{red}{
 %The results of these studies, identifying potential issues
 %caused by API evolutions, are the primary motivations for
 %this work.
-
+%
 These prior efforts clearly motivate the need to address
 issues that can arise from API evolution.  However, their
 approaches do not provide detailed technical solutions or
@@ -136,18 +141,12 @@ on.
 
 \end{comment}
 
-%There is also work on identifying other reasons for application crashes, and one of the common reasons for these crashes is API incompatibility \cite{lili2018cid}, \cite{huang2018understanding}.
 \textbf{API incompatibility}. 
-%The other, perhaps most closely related relevant line of research to ours focuses
-%A number of techniques have been recently developed for
-%detecting Android API incompatibilities.  
 In Table~\ref{tab:table_comparison_tools}, we compare the
 detection capabilities of \textsc{\@approach} against the
 current state-of-the-art approaches. It is important to
 stress that \@approach is the only solution that 
-%provides the capability of 
-can automatically detect various types of
-Android compatibility issues, i.e., API invocation
+can automatically detect API invocation
 compatibility issues (API), API callback compatibility
 issues (APC), and permission-induced compatibility issues
 (PRM). %We continue to discuss some of the closely related works to ours and the differences between those works and ours.
@@ -160,63 +159,69 @@ issues (APC), and permission-induced compatibility issues
     \vspace{-0.5cm}
 \end{table}
 
-Wu et al.~\cite{wu2017measuring} investigated side effects
-that may cause runtime crashes even within an app's
-supported API ranges, inspiring subsequent work.
+Wu et al.~\cite{wu2017measuring} investigated side
+effects that may cause runtime crashes even within an
+app's supported API ranges, inspiring subsequent work.
 %
-Huang et al.~\cite{huang2018understanding}
-aimed to understand callback evolution and developed
-\textsc{Cider}, a tool capable of identifying API callback
-compatibility issues. However, \textsc{Cider}'s analysis
-relies on manually built PI-GRAPHS, which are models of
-common compatibility callbacks of four classes: Activity,
-Fragment, Service and WebView. \textsc{Cider} thus does not deal
-with APIs that are not related to these classes or
+Huang et al.~\cite{huang2018understanding} aimed to
+understand callback evolution and developed
+\textsc{Cider}, a tool capable of identifying API
+callback compatibility issues. However,
+\textsc{Cider}'s analysis relies on manually built
+PI-GRAPHS, which are models of common compatibility
+callbacks of four classes: Activity, Fragment, Service
+and WebView. \textsc{Cider} thus does not deal with
+APIs that are not related to these classes or
 permission induced mismatches. 
-%As this tool focuses on these predefined callback classes, 
-%Moreover, by only focusing on callback classes, 
-As such, their reported result
-is a subset of ours. In addition, \textsc{Cider}'s API
-analysis is based on the Android documentation, which is
-known to be incomplete~\cite{wu2017measuring}. Our work, on
-the other hand, automatically analyzes each API level in its
-entirety to identify all existing APIs. This allows our
-approach to be more accurate in detecting actual changes in
-API levels, as there are frequent platform updates and bug
-fixes. As a result, and as confirmed by the evaluation results, 
-our approach features much higher precision and recall  in detecting compatibility issues.
-%\textsc{Cider} also relies on constructing Callback Control
-%Flow Graph, while our analysis simply works on an existing
-%method call graph and data flow graphs generated by
-%\textsc{Jitana} to help us uncover sources of potential
-%issues.}  % but it comes at a cost of higher manual efforts
-%and possibly longer analysis time. However, while being
-%able to complete each analysis in just a few seconds.
-%Another difference between the two approaches is that their
-%analysis is based on \textsc{Soot}, which requires the Dex
-%code be converted to Jimple.
+%As this tool focuses on these predefined callback
+%classes, Moreover, by only focusing on callback
+%classes, 
+As such, their reported result is a subset of ours. In
+addition, \textsc{Cider}'s API analysis is based on the
+Android documentation, which is known to be
+incomplete~\cite{wu2017measuring}. Our work, on the
+other hand, automatically analyzes each API level in
+its entirety to identify all existing APIs. This allows
+our approach to be more accurate in detecting actual
+changes in API levels, as there are frequent platform
+updates and bug fixes. As a result, and as confirmed by
+the evaluation results, our approach features much
+higher precision and recall in detecting compatibility
+issues.
+%\textsc{Cider} also relies on constructing Callback
+%Control Flow Graph, while our analysis simply works on
+%an existing method call graph and data flow graphs
+%generated by \textsc{Jitana} to help us uncover
+%sources of potential issues.}  % but it comes at a
+%cost of higher manual efforts and possibly longer
+%analysis time. However, while being able to complete
+%each analysis in just a few seconds.  Another
+%difference between the two approaches is that their
+%analysis is based on \textsc{Soot}, which requires the
+%Dex code be converted to Jimple.
 
-Lint \cite{linttips} is a static analysis tool introduced in
-ADT (Android Development Tools) version 16. One of the
-benefits of Lint is that the plugin is integrated with the
-Android Studio IDE, which is the default editor for Android
-development. The tool checks the source code to identify
-potential bugs such as layout performance issues, and
-accessing API calls that are not supported by the target API
-version. However, the tool generates false positives when
-verifying unsupported API calls (e.g., when an API call
-happens within a function triggered by a conditional
-statement). Another disadvantage is that it requires the
-availability of the original source code, and it does not
-analyze Android application packages, i.e., apk files.  In
-addition, \textsc{Lint} requires the project to be first
-built in the Android Studio IDE before conducting the
-analysis.  Unlike \textsc{Lint}, \@approach operates
-directly on Dex code. While \textsc{Lint} claims to be able
-to detect API incompatibility issues, our experimental
-results as well as the results obtained by Huang et al.
-indicate that \textsc{Lint} is not as effective as
-\@approach or \textsc{Cider}.
+Lint \cite{linttips} is a static analysis tool
+introduced in ADT (Android Development Tools) version
+16. One of the benefits of Lint is that the plugin is
+integrated with the Android Studio IDE, which is the
+default editor for Android development. The tool checks
+the source code to identify potential bugs such as
+layout performance issues, and accessing API calls that
+are not supported by the target API version. However,
+the tool generates false positives when verifying
+unsupported API calls (e.g., when an API call happens
+within a function triggered by a conditional
+statement). Another disadvantage is that it requires
+the availability of the original Java source code, and
+it does not analyze APKs.  In addition, \textsc{Lint}
+requires the project to be first built in the Android
+Studio IDE before conducting the analysis.  Unlike
+\textsc{Lint}, \@approach operates directly on Dex
+code. While \textsc{Lint} claims to be able to detect
+API incompatibility issues, our experimental results as
+well as the results obtained by Huang et al.  indicate
+that \textsc{Lint} is not as effective as \@approach or
+\textsc{Cider}.
 
 Li et al.~\cite{lili2018cid} provided an overview of the
 Android API evolution to identify cases where compatibility
@@ -229,7 +234,7 @@ detect backward incompatibilities.  \textsc{CiD} supports
 compatibility analysis upto the API level 25.  In
 comparison, \@approach offers automated extraction of the
 API database, and thereby supports up to the most recent
-Android platform (API level 28).  Moreover, in contrast to
+Android platform (API level 29).  Moreover, in contrast to
 \@approach, \textsc{CiD} did not consider incompatibilities
 regarding the runtime permission system.
 

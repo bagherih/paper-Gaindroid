@@ -254,6 +254,7 @@ crashes when its tries to load data from the storage
 mechanism.
 
 \subsection{Limitations of Existing Work}
+\label{limitations}
 \commentws{
 One major short-coming of the state-of-the-art
 approaches in detecting API compatibility issues is
@@ -269,7 +270,8 @@ unison, it would need to load the application and the
 ADF code together as part of the analysis. Loading both
 components is not feasible due to high memory 
 consumption. As such, they analyze an app and the
-underlying ADF separately.
+underlying ADF separately, as shown in
+Figure~\ref{fig:compare}a.
 
 Existing techniques also face another challenge when 
 analyzing the ADF code. For example, \textsc{Soot}, a

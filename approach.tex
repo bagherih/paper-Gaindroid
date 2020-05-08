@@ -1,29 +1,29 @@
 
 \section{Approach}\label{sec-approach}
 
-\commentws{ As previously mentioned, one major
-short-coming of the state-of-the-art approaches in
-detecting API compatibility issues is their inability
-to analyze application-under-analysis and the
-underlying ADF code in unison. As shown in
-Figure~\ref{fig:compare}a, these approaches perform
-analysis in two steps: analyzing the app and modeling
-the ADFs.  They then perform another layer of analysis
-that consider both results to detect API compatibility
-issues. In doing so, these approaches can miss
-detecting issues that lie deeper into the ADFs.   
+%As previously mentioned, one major
+%short-coming of the state-of-the-art approaches in
+%detecting API compatibility issues is their inability
+%to analyze application-under-analysis and the
+%underlying ADF code in unison. As shown in
+%Figure~\ref{fig:compare}a, these approaches perform
+%analysis in two steps: analyzing the app and modeling
+%the ADFs.  They then perform another layer of analysis
+%that consider both results to detect API compatibility
+%issues. In doing so, these approaches can miss
+%detecting issues that lie deeper into the ADFs.   
 
 
-\@approach, on the other hand, can analyze the
-application and ADF code in unison by utilizing a novel
+\commentws{ \@approach can analyze the application and
+ADF code in unison by utilizing a novel
 class-loader-based program analysis approach. A
 class-loader is a runtime component that is part of any
 Java or Android Virtual Machine. It is responsible for
 incrementally loading any class needed during
 execution. It can accomplish this because of Java
 partition code into classes that can be individually
-loaded. \textit{\@approach adapts this runtime
-concept to support its scalable static analysis.} 
+loaded. \textit{\@approach adapts this runtime concept
+to support its scalable static analysis.} 
 
 \begin{figure}[t!]
     \centering
@@ -42,13 +42,15 @@ to locate and load classes that can be reachable within
 a program.  As an example, if an application method
 calls an Android API, the class to which the API
 belongs would be loaded.  By utilizing CLVM, \@approach
-, as shown in Figure~\ref{fig:compare}b, analyzes the application classes and only the reachable
-ADF classes, and not the entire ADF code. This analysis
-approach significantly reduces both peak memory
-footprint and memory consumption over time (as will be
-shown later).  Currently, \@approach can only analyze
-Dex code; it does not support the loading and analysis
-of native code.  
+, as shown in Figure~\ref{fig:compare}b, analyzes the
+application classes and only the reachable ADF classes,
+and not the entire ADF code. This analysis approach
+blurs the line that separates application and ADF code and
+significantly reduces both peak memory footprint and
+memory consumption over time (as will be shown later).
+Currently, \@approach can only analyze Dex code; it
+does not support the loading and analysis of native
+code.  
 
 The rest of this section overviews our approach,
 leveraging CLVM to automatically detect all three types
@@ -108,29 +110,21 @@ analysis is conducted over the augmented graph to identify
 the guards that encompass the execution paths reaching the
 annotated API calls or permission-required functionalities. 
 
-\commentty{Need more details on the analysis algorithm.
-We also need to clarify the technical challenges and
-our unique contributions.} 
-
-\commentws{I add a few paragraphs to explain how our
-analysis works differently than the exising state of
-the art in background (at the end) and approach (at the
-beginning). Please check to see if you think they
-answer all the reviewer's comments from the past.}
-
 \@approach's compatibility analysis has three major
 advantages over the state-of-the-art approaches.
 First,  to render our analysis more \emph{effective,
 efficient, and scalable}, \@approach's AUM module
-employs an approach that incrementally discovers
-pertinent classes via reachability
-analysis~\cite{tsutano2017efficient}.  It then analyzes
-only these classes. This, in turn, allows our technique
-to be significantly faster and more space efficient
-than the state-of-the-art in compatibility analysis,
-without sacrificing its capability in detecting
-compatibility issues, as evidenced by the experimental
-results (cf.  Section~\ref{sec-eval}).  Some existing
+employs \emph{CLVM} that incrementally discovers
+pertinent application and ADF classes via reachability
+analysis~\cite{tsutano2017efficient}.  
+%It then analyzes
+%only these classes. This, in turn, allows our technique
+%to be significantly faster and more space efficient
+%than the state-of-the-art in compatibility analysis,
+%without sacrificing its capability in detecting
+%compatibility issues, as evidenced by the experimental
+%results (cf.  Section~\ref{sec-eval}).  
+Some existing
 state-of-the-art
 techniques~\cite{huang2018understanding,he2018understanding},
 on the other hand, directly load the entire code base
@@ -163,21 +157,22 @@ extended with new desirable features at run-time. However,
 in spite of its virtue, it poses challenges to analysis
 techniques for assessing compatibility of Android apps.
 
-To avoid missing any potential compatibility-related issues
-that may result in crashes at run-time, \@approach takes a
-conservative approach and considers all possible bindings
-that can be statically discovered.  More precisely,
-\@approach's AUM component examines not only the main app
-code loaded at the installation time, but also any other
-code accessible from the app package that can be dynamically
-loaded at run-time.  AUM incrementally augments the
-control-flow and data-flow graphs by recursively identifying
-and examining such to-be dynamically loaded classes to
-ensure that every method in every such classes is analyzed.
-Note that such to-be dynamically loaded code may not always
-be statically analyzable, especially when it is not bundled
-within installed packages, and rather externally loaded from
-remote servers.
+To avoid missing any potential compatibility-related
+issues that may result in crashes at run-time,
+\@approach takes a conservative approach and considers
+all possible bindings that can be statically
+discovered.  More precisely, \@approach's AUM component
+examines not only the main app code loaded at the
+installation time, but also any other code accessible
+from the app package that can be binded at run-time.
+AUM incrementally augments the control-flow and
+data-flow graphs by recursively identifying and
+examining such to-be dynamically loaded classes to
+ensure that every method in every such classes is
+analyzed.  Note that such to-be dynamically loaded code
+may not always be statically analyzable, especially
+when it is not bundled within installed packages, and
+rather externally loaded from remote servers.
   
 \subsection{ARM: Android Revision Modeler} 
 
