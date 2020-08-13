@@ -200,7 +200,7 @@ updating the app to use runtime permissions and setting the
     \centering
     \vspace{-0.5cm}
     %\includegraphics[width=0.46\textwidth]{images/scatterplot.png}
-    \includegraphics[width=0.9\linewidth]{images/scatterplot.png}
+    \includegraphics[width=0.8\linewidth]{images/scatterplot.png}
     \vspace{-0.4cm}
     \caption{Scatter plot representing analysis time for compatibility checking of Android apps using \@approach.}
     \label{fig:scatterplot}
@@ -253,10 +253,10 @@ real-world usage.
 
 \begin{figure}[b!]
 	\centering
-	    \vspace{-0.5cm}
+	    \vspace{-0.4cm}
 %	\includegraphics[width=0.42\textwidth]{images/memory_gd.png}
 	\includegraphics[width=0.77\linewidth]{images/memory_gd.png}
-	\vspace{-0.4cm}
+	\vspace{-0.5cm}
 	\caption{Amount of memory used by \@approach and \textsc{CiD} when analyzing real-world Android apps.}
 	\label{fig:memory_gd}
 %	\vspace{-0.6cm}
@@ -301,16 +301,4 @@ perform the same analysis.  We interpret this data as
 corroborating  the effectiveness of our technique in
 practice for compatibility analysis.
 
-\commentws{ By performing analysis incrementally, the
-analysis cost is amortized over time.  This also
-results in shorter start up time as only a small
-portion of the code is needed to begin analysis.
-\textsc{Semeo} can perform analysis in one pass whereas
-\textsc{CID} needs two passes to detect compatibility
-issues (see Section~\ref{limitations}). These factors
-make our approach highly efficient.  Furthermore, the
-amount of memory that must be committed to store code
-and perform incremental analysis is also small,
-resulting in fewer page faults and more available
-memory to support analysis. This can enhance the
-scalability of our approach.  }
+

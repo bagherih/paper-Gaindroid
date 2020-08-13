@@ -14,17 +14,8 @@
 %detecting issues that lie deeper into the ADFs.   
 
 
-\commentws{ \@approach can analyze the application and
-ADF code in unison by utilizing a novel
-class-loader-based program analysis approach. A
-class-loader is a runtime component that is part of any
-Java or Android Virtual Machine. It is responsible for
-incrementally loading any class needed during
-execution. It can accomplish this because of Java
-partition code into classes that can be individually
-loaded. \textit{\@approach adapts this runtime concept
-to support its scalable static analysis.} 
-
+ 
+\begin{comment}
 \begin{figure}[t!]
     \centering
     \includegraphics[width=\linewidth]{images/differences.pdf}
@@ -33,27 +24,15 @@ to support its scalable static analysis.}
     \label{fig:compare}
     \vspace{-0.3cm}
 \end{figure}
+\end{comment}
 
-In a nutshell, \@approach utilizes a \emph{ClassLoader
-Virtual Machine} (\emph{CLVM}) to perform class-based
-reachability analysis~\cite{tsutano2017efficient}.
-\emph{CLVM} takes advantage of code structure in Java
-to locate and load classes that can be reachable within
-a program.  As an example, if an application method
-calls an Android API, the class to which the API
-belongs would be loaded.  By utilizing CLVM, \@approach
-, as shown in Figure~\ref{fig:compare}b, analyzes the
-application classes and only the reachable ADF classes,
-and not the entire ADF code. This analysis approach
-blurs the line that separates application and ADF code and
-significantly reduces both peak memory footprint and
-memory consumption over time (as will be shown later).
-Currently, \@approach can only analyze Dex code; it
-does not support the loading and analysis of native
-code.  
+%\commentws{ \@approach can analyze the application and ADF code in unison by utilizing a novel class-loader-based program analysis approach. A class-loader is a runtime component that is part of any Java or Android Virtual Machine. It is responsible for incrementally loading any class needed during execution. It can accomplish this because of Java partition code into classes that can be individually loaded. \textit{\@approach adapts this runtime concept to support its scalable static analysis.} 
 
-The rest of this section overviews our approach,
-leveraging CLVM to automatically detect all three types
+
+%In a nutshell, \@approach utilizes a \emph{ClassLoader Virtual Machine} (\emph{CLVM}) to perform class-based reachability analysis~\cite{tsutano2017efficient}. \emph{CLVM} takes advantage of code structure in Java to locate and load classes that can be reachable within a program.  As an example, if an application method calls an Android API, the class to which the API belongs would be loaded.  By utilizing CLVM, \@approach, as shown in Figure~\ref{fig:compare}b, analyzes the application classes and only the reachable ADF classes, and not the entire ADF code. This analysis approach blurs the line that separates application and ADF code and significantly reduces both peak memory footprint and memory consumption over time (as will be shown later). Currently, \@approach can only analyze Dex code; it does not support the loading and analysis of native code.  
+
+This section overviews our approach, 
+to automatically detect all three types
 of API- and permission-induced mismatches described in
 Table~\ref{tab:api-mismatch}. As depicted in
 Figure~\ref{fig:arch}, \@approach takes as input an app
@@ -62,7 +41,7 @@ distribute and install an Android application.} along
 with a set of Android framework versions, and produces
 a list of mismatches for the given Android app.  
 \@approach comprises three main components:
-}
+
 
 (1) The \textit{API usage modeler (AUM)} that utilizes
 different static analysis techniques, i.e., control
@@ -92,7 +71,7 @@ turn.
     \vspace{-0.2cm}    
     \caption{Architecture of \@approach}
     \label{fig:arch}
-    \vspace{-0.3cm}
+    \vspace{-0.6cm}
 \end{figure}
 
 \subsection{AUM: API Usage Modeler}
@@ -114,16 +93,27 @@ annotated API calls or permission-required functionalities.
 advantages over the state-of-the-art approaches.
 First,  to render our analysis more \emph{effective,
 efficient, and scalable}, \@approach's AUM module
-employs \emph{CLVM} that incrementally discovers
+employs a novel class-loader based approach that incrementally discovers
 pertinent application and ADF classes via reachability
 analysis~\cite{tsutano2017efficient}.  
-%It then analyzes
-%only these classes. This, in turn, allows our technique
-%to be significantly faster and more space efficient
-%than the state-of-the-art in compatibility analysis,
-%without sacrificing its capability in detecting
-%compatibility issues, as evidenced by the experimental
-%results (cf.  Section~\ref{sec-eval}).  
+%It then analyzes only these classes. 
+More specifically, \@approach's AUM module utilizes a \emph{Class Loader
+Virtual Machine} (\emph{CLVM}) to perform class-based
+reachability analysis~\cite{tsutano2017efficient}.
+\emph{CLVM} takes advantage of the code structure in Java
+to locate and load classes that can be reachable within
+a program.  As a concrete example, if an application method
+calls an Android API, the class to which the API
+belongs would be loaded.  By utilizing CLVM, \@approach analyzes the application classes along with reachable ADF classes, rather than analyzing the entire ADF code. This analysis approach
+blurs the line that separates application and ADF code and
+significantly reduces both peak memory footprint and
+memory consumption over time.
+This, in turn, allows our technique
+to be significantly faster and more space efficient
+than the state-of-the-art in compatibility analysis,
+without sacrificing its capability in detecting
+compatibility issues, as evidenced by the experimental
+results (cf.  Section~\ref{sec-eval}).  
 Some existing
 state-of-the-art
 techniques~\cite{huang2018understanding,he2018understanding},
@@ -261,14 +251,6 @@ state-of-the-art techniques, such as {\sc Lint} and {\sc
 CiD}.
 
 
-\begin{figure}[t!]
-%    \begin{minipage}{8cm}
-%        \vspace{-1cm}
-        \input{algorithms/apc-algorithm}
-        \vspace{-5ex}
-%    \end{minipage}
-\end{figure}
-
 
 \textit{Callback mismatch:} %For each method in the call graph, the detector executes Algorithm~\ref{alg:apc-mismatch}. 
 The detector uses Algorithm~\ref{alg:apc-mismatch} to detect API callback mismatches in each method within the call graph derived from the app under analysis.
@@ -284,19 +266,6 @@ making it widely applicable and practical for use by many.
 
 
 
-
-
-%\subsubsection{Permission Mismatch Detector}\label{subsec-permission-mismatch}
-
-
-
-\begin{figure}[t!]%{R}{0.66\textwidth}
-%    \begin{minipage}{8cm}
-        %\vspace{-5ex}
-        \input{algorithms/permissions-mismatch}
-%        \vspace{-1cm}
-%    \end{minipage}
-\end{figure}
 
 
 The second part of the \textit{Mismatch Detection} component detects
@@ -319,4 +288,17 @@ whether each block in the data flow graph uses any of the dangerous permissions
 (lines 13-15). In case any dangerous permission is used, add it to the
 set~of~mismatches~(line~16).
 
+
+
+
+\begin{figure}[t]
+%    \begin{minipage}{8cm}
+%        \vspace{-1cm}
+        \input{algorithms/apc-algorithm}
+        \vspace{-5ex}
+%    \end{minipage}
+\end{figure}
+
+
+%\subsubsection{Permission Mismatch Detector}\label{subsec-permission-mismatch}
 
