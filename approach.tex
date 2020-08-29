@@ -159,6 +159,15 @@ may not always be statically analyzable, especially
 when it is not bundled within installed packages, and
 rather externally loaded from remote servers.
   
+  
+
+\begin{figure}[t!]%{R}{0.66\textwidth}
+%    \begin{minipage}{8cm}
+        \input{algorithms/api-algorithm}
+        \vspace{-0.6cm}
+%    \end{minipage}
+\end{figure}
+
 \subsection{ARM: Android Revision Modeler} 
 
 The ARM module derives both the API lifecycle and the permission mapping models through mining of the Android framework revision history.
@@ -173,14 +182,6 @@ The Android revision modeling component to derive the lifetime of each framework
  
 
   
-
-\begin{figure}[t!]%{R}{0.66\textwidth}
-%    \begin{minipage}{8cm}
-        \input{algorithms/api-algorithm}
-        \vspace{-0.6cm}
-%    \end{minipage}
-\end{figure}
-
 
  
  
@@ -197,6 +198,18 @@ The \textit{Mismatch Detection} component first checks for API compatibility iss
 Section~\ref{API Compatibility Issues}), using the following process to spot both
 API invocation and callback mismatches:
  
+
+
+\begin{figure}[t]
+%    \begin{minipage}{8cm}
+%        \vspace{-1cm}
+        \input{algorithms/apc-algorithm}
+        \vspace{-3ex}
+%    \end{minipage}
+\end{figure}
+
+
+
 
 \textit{Invocation mismatch:} The detector uses
 the algorithm in Fig.~\ref{alg:api-mismatch} to detect API invocation
@@ -248,6 +261,14 @@ CiD}.
 
 
 
+\begin{figure}[t!]%{R}{0.66\textwidth}
+%    \begin{minipage}{8cm}
+        %\vspace{-5ex}
+        \input{algorithms/permissions-mismatch}
+%        \vspace{-1cm}
+%    \end{minipage}
+\end{figure}
+
 \textit{Callback mismatch:} %For each method in the call graph, the detector executes Algorithm~\ref{alg:apc-mismatch}. 
 The detector uses the algorithm in Fig.~\ref{alg:apc-mismatch} to detect API callback mismatches in each method within the call graph derived from the app under analysis.
 If the method overrides an API callback
@@ -287,15 +308,6 @@ whether each block in the data flow graph uses any of the dangerous permissions
 set~of~mismatches~(line~16).
 
 
-
-
-\begin{figure}[t]
-%    \begin{minipage}{8cm}
-%        \vspace{-1cm}
-        \input{algorithms/apc-algorithm}
-        \vspace{-3ex}
-%    \end{minipage}
-\end{figure}
 
 
 %\subsubsection{Permission Mismatch Detector}\label{subsec-permission-mismatch}
