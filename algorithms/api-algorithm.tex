@@ -1,6 +1,6 @@
-\begin{algorithm}[H]
-%\footnotesize
-	\small
+%\begin{algorithm}[H]
+\footnotesize
+%	\small
 	\begin{algorithmic}[1]
 		\Procedure{FindApiMismatches}{block, app}\newline
 		\Comment{{\bf Input:} Block from data flow graph, decompiled APK}
@@ -9,17 +9,18 @@
 		\ElsIf{\Call{IsApiCall}{block}}
 		\ForEachIn{lvl}{(minLvl..maxLvl)}
 		\If{$\neg$apidb.\Call{Contains}{block,lvl}}
-		\State{mismatches $\gets$ mismatches $\cup$ \{block\}}
+		\State{mm $\gets$ mm $\cup$ \{block\}}
 		\EndIf
 		\EndFor
 		\ElsIf{\Call{IsMethod}{block}}
-		\State{mismatches $\gets$ mismatches $\cup$ FindApiIn(block, minLvl, maxLvl)}
+		\State{mm $\gets$ mm $\cup$ FindApiIn(block, minLvl, maxLvl)}
 		\ElsIf{\Call{IsGuardEnd}{block}}
 		\State{(minLvl,maxLvl) $\gets$ (app.minSdk,app.maxSdk)}
 		\EndIf
-		\State{\Return{mismatches}}
+		\State{\Return{mm}}
 		\EndProcedure
 	\end{algorithmic}
-	\captionof{algorithm}{Detecting API mismatches}
+%	\captionof{algorithm}{Detecting API mismatches}
+    \caption{Detecting API mismatches}
 	\label{alg:api-mismatch}
-\end{algorithm}
+%\end{algorithm}

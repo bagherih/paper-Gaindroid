@@ -1,16 +1,21 @@
-%\vspace{-0.2cm}
+%\vspace{-0.1cm}
 \section{Discussion and Limitations}\label{sec-discussion}
+%\vspace{-0.1cm}
 
 
 By performing the analysis incrementally, \@approach's
-analysis cost is amortized over time.  This also
-results in shorter start up time as only a small
+analysis cost is amortized over time.  
+%This also
+%results in shorter 
+Start up time is also short as only a small
 portion of the code is needed to begin the analysis.
 %\@approach can perform analysis in one pass, whereas the state-of-the-art needs two passes to detect compatibility issues (see Section~\ref{limitations}). 
-These factors make \@approach highly efficient.  Furthermore, the amount of memory that must be committed to store code
-and perform incremental analysis is also small,
-resulting in fewer page faults and more available
-memory to support analysis, substantially enhancing the
+%These factors make \@approach highly efficient. 
+Furthermore, the amount of memory that must be committed to store code
+and perform incremental analysis is small,
+%resulting in fewer page faults and more available
+%memory to support analysis,
+substantially enhancing the
 scalability of our approach. 
 
 %Next we discuss 

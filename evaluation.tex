@@ -40,7 +40,7 @@ As a result, our approach implementation only requires the availability of Andro
 %, which enables our tool to work on non-open source applications whose APKs can be found online. We also need to decompile the APK file to extract the manifest file, and to that end we use \textsc{APKTool} \cite{apktool}. 
 %We further modified \textsc{Jitana} to decode dex files using Android version 6.0.0, which is the version in which the new runtime permissions system is introduced. We also extended \textsc{Jitana} to perform inter-procedural dataflow analysis, which enabled us to detect more API related issues within different methods of an Android app.
 %}
-\@approach's tool and the experimental data are available at the project website~\cite{GainDroid}.
+\@approach's tool and experimental data are available~\cite{GainDroid}.
 
 
 
@@ -65,12 +65,12 @@ We used the \@approach apparatus for carrying out the experiments. In our evalua
 
 \subsection{Objects of Analysis}
 
-Our experimental objects are a set of Android apps
-drawn from different sources.  
+%Our experimental objects are a set of Android apps
+%drawn from different sources.  
 
 To evaluate the accuracy of our analysis technique and
 compare it against the other compatibility analysis
-tools, we used two suites of benchmark apps,
+tools, we used two suites of benchmark Android apps,
 \textsc{CiD}-Bench~\cite{lili2018cid} and
 \textsc{Cider}-Bench~\cite{huang2018understanding},
 developed independently by other research groups.
@@ -114,8 +114,8 @@ apps.}; therefore, they are excluded from the analysis,
 leaving the total of \rqoneapps~apps used in
 our~comparative~study.  Using the same benchmark apps
 as prior research allows us to compare our results
-against them and help eradicate internal threats to the
-validity of our results.
+against them and help eradicate threats to our internal
+validity.
 
 To evaluate the implications of our tool in practice, we collected over 3,000 real-world Android apps from the following two sources:
 %To further evaluate the applicability of our tool in practice, we collected a set of real-world Android apps from two repositories of FDroid~\cite{fdroid} and AndroZoo~\cite{allix2016androzoo}. 
@@ -126,8 +126,7 @@ apps.  Our collection of subject systems includes all
 (2) We also include 2,300 apps from AndroZoo~\cite{allix2016androzoo}, a growing repository of Android apps
 collected from various sources, including the official Google Play store. We were
 unable to build 120 of the apps from AndroZoo so we
-excluded them from our analysis, leaving \apptotal~apps
-in total.
+excluded them from our analysis, leaving \apptotal~total apps.
 
 \subsection{Variables and Measures}
 
@@ -143,10 +142,8 @@ Android compatibility issues. It has been publicly released,
 and we are able to obtain the tool and compile it in our
 experimental environment.  We use it as the baseline system
 to answer RQ1 and RQ3.
-
 {\sc Cider} is another state-of-the-art approach developed to analyze API compatibility issues. Unfortunately, it is not available in  either source or binary forms at the
 time of writing this article.  As such, we rely on their results as reported in \cite{huang2018understanding} to answer RQ1 and RQ3.
-
 \textsc{Lint} is a static analysis technique, shipped
 with the Android Development Tools (ADT), to examine
 code bases for potential bugs, including incompatible
@@ -155,8 +152,9 @@ analysis as part of building apps, and thus requires the app source code to cond
 
 We also considered {\sc
 IctApiFinder}~\cite{he2018understanding} as a possible
-baseline technique. {\sc IctApiFinder} was introduced
-at about the same time as \textsc{Cider}.
+baseline technique. 
+%{\sc IctApiFinder} was introduced
+%at about the same time as \textsc{Cider}.
 Unfortunately, the tool is not publicly available and
 our attempts to contact the authors to request access
 were unsuccessful. Therefore, we did not use it in our
@@ -166,23 +164,18 @@ study.
 %tool and each of the above tools and what results
 %we'd expect. }
 
-\subB{Dependent Variables.} As dependent variables, we chose
-metrics allowing us to answer each of our three research
-questions.
-
+\subB{Dependent Variables.} 
+%As dependent variables, we chose
+%metrics allowing us to answer each of our three research
+%questions.
 To measure accuracy, we compare the number of detected compatibility issues with known issues as reported by prior work~\cite{huang2018understanding,lili2018cid}. For each analysis technique, we report true and false positives and false
 negatives thereof in detecting compatibility issues of the apps under analysis. Lastly, we report precision, recall and F-measure for each technique.
-
-
 %We then report true (\tp) and false (\fp) positives and false negatives (\fn) based on comparisons to results from baseline techniques. Lastly, we report precision, recall and F-measure.
-
-\input{tab-results}
-
-
 To measure applicability, we report the number of detected
 compatibility issues in real-world apps. Finally, to measure
 performance, we report the analysis time and the amount of memory used by each of the analysis techniques, i.e., \@approach, {\sc CiD}, and \textsc{Lint}.
 
+\input{tab-results}
 
 \subsection{Study Operation}
 
@@ -208,10 +201,8 @@ average analysis time of the last three analyses.
 \subsection{Threats to Validity}
 
 The primary threat to external validity in this study
-involves the object programs utilized. In this work,
-we have studied a smaller set of benchmark programs
-developed and released by prior research
-work~\cite{lili2018cid,huang2018understanding} so that
+involves the object programs. We have studied a smaller set of benchmark programs
+developed and released by prior research~\cite{lili2018cid,huang2018understanding} so that
 we can directly compare our results with their
 previously reported results.  However, we also extend
 our evaluation to employ over 3,590 complex real-world apps from
@@ -225,9 +216,7 @@ and the infrastructure used to run \textsc{CiD} and
 \@approach.  To limit these, we extensively validated
 all of our tool components and scripts to ensure
 correctness.  By using the same objects as our baseline
-systems we can also compare the results produced by our
-approach with those previously reported to help with
-ensuring correctness.
+systems we can compare our results with those previously reported to ensure correctness.
 
 The primary threat to construct validity relates to the
 fact that we study efficiency measures relative to

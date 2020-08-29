@@ -15,7 +15,7 @@
     commentstyle=\color{pgreen}
 }
 
-\section{API and Permission-Induced Compatibility Issues}\label{sec-background}
+\section{API / Permission-Induced Compatibility Issues}\label{sec-background}
 
 To motivate the research and demonstrate the need for
 mechanisms for incompatibility detection, this section
@@ -23,8 +23,8 @@ describes three types of Android compatibility issues,
 which can lead to runtime app crashes.
 Table~\ref{tab:api-mismatch} summarizes API- and
 permission-induced compatibility issues.  We will later
-show how \@approach helps effectively identify these
-incompatibility scenarios.
+show how \@approach helps identify these
+incompatibilities.
 
 %\begin{comment}
 %In this section, we provide background information related to the Android API and motivate the need for a technique that can effectively identify general API compatibility issues. We also describe and illustrate three types of API and permission-related compatibility issues, summarized in Table \ref{tab:api-mismatch}.
@@ -34,16 +34,15 @@ incompatibility scenarios.
 
 \subsection{Android API Background}
 
-As of August 2018, there are 26 releases of the Android API, most recently
-API level 28~\cite{introducingAndroid9}.  Each version contains new and
+As of September 2019, there have been 27 releases of the Android API, most recently
+API level 29~\cite{android10}.  Each version contains new and
 updated methods to help developers improve app performance, security,
 and user-experience. In this work, we mainly refer to each release of
 the Android API by its API level (e.g., 26) rather than the associated name 
 (Oreo) or Android version number (8.0)~\cite{androidversions}. 
 Google strongly recommends that developers specify the range of the API levels
 their apps can support in the manifest or Gradle file by setting
-three specific attributes: (1) {\tt minSdkVersion}, which specifies the lowest level of the API supported by the app; (2) {\tt targetSdkVersion}, which specifies the level of the API used during app development; and (3) {\tt maxSdkVersion}, which specifies the highest level of the
-    API supported by the app.\footnote{According to the Google documentation, declaring this attribute is not
+three attributes: (1) {\tt minSdkVersion}, which specifies the lowest level of the API supported by the app; (2) {\tt targetSdkVersion}, which specifies the level of the API used during app development; and (3) {\tt maxSdkVersion}, which specifies the highest API level supported by the app.\footnote{According to the Google documentation, declaring this attribute is not
     recommended~\cite{sdkversions} but installing an older app on a newer device
     may still lead to unexpected behavior~\cite{Update4}.}
 
@@ -293,5 +292,5 @@ Different from all these techniques, our approach
 gradually loads classes from both the
 application and ADF codebase as needed, and analyzes them all together.  As such, \@approach analysis seamlessly produces a method-call graph that includes methods from both application and ADF classes.  \@approach, therefore, achieves higher effectiveness in detecting different types of API compatibility issues. 
 
-In the next section, we describe the details of \@approach.  
+%In the next section, we describe the details of \@approach.  
 

@@ -1,42 +1,43 @@
-\begin{algorithm}[H]%[t!] 
+%\begin{algorithm}[H]%[t!] 
 %\scriptsize 
-%\footnotesize
-\small
+\footnotesize
+%\small
 \relax 
 %\caption{Detecting permission mismatches}
 %\label{alg:permissions-mismatch}
 \begin{algorithmic}[1]
-\Procedure{DetectPermissionMismatch}{app, graph, permMap}
-\newline\Comment{\rlap{\bf Input:}\phantom{\textbf{Output:}} Decompiled APK, call/data flow graph, permission map}
+\Procedure{DetectPermMismatch}{app, graph, permMap}
+\newline\Comment{\rlap{\bf Input:}\phantom{\textbf{Output:}} Decompiled APK, call/data flow graph, perm. map}
 \newline\Comment{\textbf{Output:} List of detected mismatches}
-    \State{dangerousPerms $\gets$ \Call{GetDangerousPermsFromManifest}{app}}
-    \If{dangerousPerms $=\emptyset$}
+    \State{dngrPerms $\gets$ \Call{GetDngrPermsFromManifest}{app}}
+    \If{dngrPerms $=\emptyset$}
         \State{\Return{$\emptyset$}}
     \EndIf
     \State{callGraph $\gets$ \Call{BuildCallGraph}{app}}
     \If{app.targetSdkVersion $\geq 23$}
         \ForEachIn{method}{callGraph}
-            \If {\Call{OverridesOnRequestPermissionsResult}{method}}
+            \If {\Call{OverOnRequestPermsResult}{method}}
                 \State{\Return{$\emptyset$}}    
             \EndIf
         \EndFor
     \EndIf
-    \State{mismatches $\gets\emptyset$}
+    \State{mm $\gets\emptyset$}
     \ForEachIn{method}{callGraph}
-        \State {dataFlowGraph $\gets$ \Call{GetDataFlowGraph}{graph, method}}
-        \ForEachIn{block}{dataFlowGraph}
-            \ForEachIn{perm}{dangerousPerms}
-               	\If {permMap.\Call{IsUsingPermission}{perm, block}}
-                   	\State{mismatches $\gets$ mismatches $\cup$ \{perm\}}
+        \State {dfg $\gets$ \Call{GetDataFlowGraph}{graph, method}}
+        \ForEachIn{block}{dfg}
+            \ForEachIn{perm}{dngrPerms}
+               	\If {permMap.\Call{IsUsingPerm}{perm, block}}
+                   	\State{mm $\gets$ mm $\cup$ \{perm\}}
                 \EndIf
             \EndFor
         \EndFor
     \EndFor
-    \State{\Return{mismatches}}
+    \State{\Return{mm}}
 \EndProcedure
 \end{algorithmic}
-\captionof{algorithm}{Detecting PRM mismatches}
+%\captionof{algorithm}{Detecting PRM mismatches}
+\caption{Detecting PRM mismatches}
 \label{alg:prm-mismatch}
-\end{algorithm}
+%\end{algorithm}
 
  

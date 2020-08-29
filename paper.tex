@@ -1,7 +1,7 @@
-%\documentclass[10pt,conference]{IEEEtran}
+\documentclass[10pt,conference]{IEEEtran}
 %\documentclass{llncs}
 %\documentclass[format=acmsmall]{acmart}
-\documentclass[sigconf]{acmart}
+%\documentclass[sigconf]{acmart}
 %\documentclass[sigconf,review, anonymous]{acmart}
 \usepackage[noend]{algpseudocode}
 \usepackage{standalone}
@@ -13,7 +13,7 @@
 \usepackage{color}
 \usepackage{listings}
 \usepackage{lstlinebgrd}
-\usepackage[compatibility=false]{caption}
+%\usepackage[compatibility=false]{caption}
 \usepackage{balance}
 \usepackage{wrapfig}
 \usepackage{rotating}
@@ -27,6 +27,7 @@
 \usepackage{pifont}
 \usepackage{soul}
 \usepackage{booktabs} % for \specialrule command, thick table line
+\usepackage{cite}
 
 \definecolor{pblue}{rgb}{0.13,0.13,1}
 \definecolor{pgreen}{rgb}{0,0.5,0}
@@ -78,7 +79,7 @@
 \def \apptotal {3,571}
 
 
-\acmConference[ASE 2020]{the 35th IEEE/ACM Automated Software Engineering}{21--25 September, 2020}{Melbourne, Australia}
+%\acmConference[ASE 2020]{the 35th IEEE/ACM Automated Software Engineering}{21--25 September, 2020}{Melbourne, Australia}
 
 \input{kotlin}
 
@@ -92,6 +93,7 @@
 \title{Scalable, Automated Incompatibility Detection for Android} 
 %\title{Detecting and Mitigating Architectural Mismatch in Evolutionary Android Systems}
 
+\maketitle
 
 \begin{abstract}
 With the ever-increasing popularity of mobile devices over
@@ -115,13 +117,13 @@ We also show that our approach, which gradually loads and analyzes classes as ne
 
 \end{abstract}
 
-\keywords{Android compatibility, program analysis, software evolution}
+%\keywords{Android compatibility, program analysis, software evolution}
 
-\maketitle
+%\maketitle
 
-%\begin{IEEEkeywords}
-%Android compatibility, program analysis, software evolution
-%\end{IEEEkeywords}
+\begin{IEEEkeywords}
+Android compatibility, program analysis, software evolution
+\end{IEEEkeywords}
 
 \input{introduction}
 \input{background}
@@ -133,9 +135,9 @@ We also show that our approach, which gradually loads and analyzes classes as ne
 \input{conclusion}
 
 %\newpage
-%\bibliographystyle{IEEEtran}
-\balance
-\bibliographystyle{ACM-Reference-Format}
+%\balance
+%\bibliographystyle{ACM-Reference-Format}
+\bibliographystyle{IEEEtran}
 \bibliography{paper}
 
 \end{document}

@@ -5,7 +5,7 @@
 
 %In this section, we report the results of our empirical evaluations to answer the three research questions.
  
-This section reports the data we collected to empirically address the three research questions, their interpretations, and our results.
+%This section reports the data we collected to empirically address the three research questions, their interpretations, and our results.
 
 %\vspace{-0.4cm} 
 \subsection{RQ1: Accuracy}
@@ -221,7 +221,6 @@ As shown, the analysis time taken by \@approach is
 significantly lower than those of \textsc{CiD} and
 \textsc{Lint} for almost all the apps. Also note that
 \textsc{CiD} fails to completely analyze four apps.
-
 Figure~\ref{fig:scatterplot} presents the time taken by
 \@approach to perform compatibility analysis on
 real-world apps.  The scatter plot depicts both the
@@ -256,7 +255,7 @@ real-world usage.
 	    \vspace{-0.4cm}
 %	\includegraphics[width=0.42\textwidth]{images/memory_gd.png}
 	\includegraphics[width=0.77\linewidth]{images/memory_gd.png}
-	\vspace{-0.5cm}
+%	\vspace{-0.5cm}
 	\caption{Amount of memory used by \@approach and \textsc{CiD} when analyzing real-world Android apps.}
 	\label{fig:memory_gd}
 %	\vspace{-0.6cm}
@@ -287,7 +286,6 @@ Indeed, for over 60\% of the analyzed apps, \@approach loads less than 1,000 cla
 
 Loading fewer classes also allows \@approach to require less memory to perform its analysis. To investigate this matter, we also 
 \end{comment}
-
 Specifically, we monitored the memory footprint
 required by each approach for performing analysis.
 Figure~\ref{fig:memory_gd} shows a comparison of how
@@ -298,7 +296,7 @@ from 119MB to 898MB) of memory to perform the
 compatibility analysis. On the other hand, {\sc CiD} on
 average uses 1.3 GB (or four times more memory) to
 perform the same analysis.  We interpret this data as
-corroborating  the effectiveness of our technique in
-practice for compatibility analysis.
+corroborating the effectiveness of our compatibility analysis in
+practice.
 
 
