@@ -10,20 +10,14 @@
 %\begin{tiny}
 %\begin{small}
 %\begin{footnotesize}
-\begin{scriptsize}
-%\vspace{-0.8cm}
+%\begin{scriptsize}
 \caption {\label{tab:tab-timing-results} Experiments performance statistics in seconds.}
-\vspace{-0.1cm}
 \begin{tabular}{c|l|r|r|r}
-\hline
-\hline
-\rule{0pt}{3ex}
+\toprule
 %&     & \multicolumn{1}{|c}{\sc GAINDroid} & \multicolumn{4}{|c}{\sc CiD\tnote{1}} & \multicolumn{3}{|@{\hspace{0.5em}}c@{\hspace{0.5em}}}{\sc Cider\tnote{2}} & \multicolumn{4}{|c}{\sc Lint} \\
-& App      & {\sc SAINT}  & {\sc CiD}     & {\sc Lint} \\
-&       & {\sc Droid}  &       &   \\
-\hline
-\hline
-\rule{0pt}{3ex}
+& \multicolumn{1}{c|}{App}      & {\sc SAINTdroid}  & {\sc CiD}     & {\sc Lint} \\
+%&       & {\sc Droid}  &       &   \\
+\midrule
 \parbox[t]{5mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textsc{Cider}-Bench}}}
 & AFWall+         & 8.2  & -- %$\infty$
 & 41.3 \\
@@ -41,7 +35,7 @@
 & SimpleSolitaire & 6.3  & 13.2     & 20.6 \\
 & SurvivalManual  & 7.2  & 60.1     & 10.5 \\
 & Uber ride       & 4.7  & 15.8     & 25.8 \\
-\specialrule{.1em}{.05em}{.05em} 
+\midrule
 \parbox[t]{5mm}{\multirow{7}{*}{\rotatebox[origin=c]{90}{\textsc{CiD}-Bench}}}
 & Basic       & 3.9  & 21.1 & 2.5 \\
 & Forward     & 1.8  & 6.2  & 2.5 \\
@@ -50,17 +44,15 @@
 & Protection  & 3.9  & 17.1 & 3.5 \\
 & Protection2 & 3.9  & 21.2 & 3.1 \\
 & Varargs     & 3.8  & 23.5 & 3.8 \\
-\specialrule{.1em}{.05em}{.05em} 
-\multicolumn{2}{c|}{\textbf{Average}}     & 5.7  & 22.9 & 17.1 \\
-\hline
-\hline
+\midrule
+\multicolumn{2}{c|}{\textbf{Average}}     & \textbf{5.7}  & \textbf{22.9} & \textbf{17.1} \\
+\bottomrule
 \end{tabular}
 %\end{threeparttable}
 %\end{tiny}
 %\end{small}
 %\end{footnotesize}
-\end{scriptsize}
+%\end{scriptsize}
 %\end{table}
 %\end{sidewaystable}
-\vspace{-0.5cm}
 \end{table}

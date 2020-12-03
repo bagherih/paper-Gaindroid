@@ -84,13 +84,10 @@ crash the app.
 
 \begin{figure}%{R}{0.5\columnwidth}
     \centering
-%    \vspace{-1ex}
     %\captionsetup{font=scriptsize,margin=5mm}
     \includegraphics[width=0.85\columnwidth]{images/api-mismatch} 
-    \vspace{-0.1cm}
     \caption{Mismatch between app and device API levels} 
     \label{fig:api-mismatch} 
-    \vspace{-0.5cm}
 \end{figure}
 
 We divide these API incompatibilities into two types
@@ -101,7 +98,6 @@ mismatches}, where an app implements a callback method
 missing from the API level installed on the device,
 which will never be invoked.
 
-%\vspace{-0.3cm}
 \subsubsection{API invocation mismatch}
 
 Mismatches in API method invocation occur when an app
@@ -115,7 +111,6 @@ The former is an instance of a backward-compatibility issue, while the latter to
 
 \begin{figure}[b]%[8]
 %{R}{0.68\columnwidth}
-    \vspace{-0.6cm}    
     \lstset{ 
         language=Java, 
         classoffset=1,
@@ -123,7 +118,6 @@ The former is an instance of a backward-compatibility issue, while the latter to
         keywordstyle=\color{ppurple},
         classoffset=0, 
     } 
-    %\vspace{-26pt}
     %\captionsetup{font=scriptsize,justification=centering}
     \lstinputlisting[ 
     caption={API Invocation Mismatch}, 
@@ -155,8 +149,6 @@ mismatch.
 
 \begin{figure}%{R}{0.5\columnwidth} 
     \lstset{language=Java}
-    \vspace{-0.7cm}       
-    %\vspace{-31pt}
     %\captionsetup{font=scriptsize,justification=centering}
     \lstinputlisting[ 
     caption={API Callback Mismatch},
@@ -166,11 +158,9 @@ mismatch.
         \ifnum \value{lstnumber}=5 \color{highlight} \fi 
     }
     ]{code_snippets/callback-on-attach.txt} 
-%    \vspace{-0.8cm}       
 \end{figure}
 
 
-%\vspace{-0.3cm}
 \subsubsection{API callback mismatch}
 
 API callback compatibility issues initiate in the Android system when its invokes callback methods overridden in the app.  Listing \ref{lst:on-attach-context} shows a snippet adapted from the \emph{Simple Solitaire}~\cite{simplesolitaire} app, where the API callback \textsf{onAttach(Context)}, which is introduced in API level 23, is overridden. The app is also specified to run on devices with API level lower than 23, which would not call that method. Thus, any critical actions (e.g., initialization of
@@ -201,7 +191,6 @@ dangerous permission~\cite{runtimepermissions}.
         morekeywords={activity_main, ACTION_IMAGE_CAPTURE},
         keywordstyle=\color{ppurple}, classoffset=0, 
     } 
-    \vspace{-0.5cm}
 %    \captionsetup{font=footnotesize}
     \lstinputlisting[
         caption={Permissions Mismatch (tgt $\geq$ 23)}, 

@@ -7,7 +7,6 @@
  
 %This section reports the data we collected to empirically address the three research questions, their interpretations, and our results.
 
-%\vspace{-0.4cm} 
 \subsection{RQ1: Accuracy}
 
 
@@ -198,17 +197,13 @@ updating the app to use runtime permissions and setting the
 
 \begin{figure}[b]
     \centering
-    \vspace{-0.5cm}
     %\includegraphics[width=0.46\textwidth]{images/scatterplot.png}
-    \includegraphics[width=0.8\linewidth]{images/scatterplot.png}
-    \vspace{-0.4cm}
+    \includegraphics[width=\linewidth]{images/scatterplot.png}
     \caption{Scatter plot representing analysis time for compatibility checking of Android apps using \@approach.}
     \label{fig:scatterplot}
-%    \vspace{-0.7cm}
 \end{figure}
 
 
-%\vspace{-7pt}
 \subsection{RQ3: Performance} % and Timing}
 
 Table~\ref{tab:tab-timing-results} shows the analysis
@@ -252,13 +247,10 @@ real-world usage.
 
 \begin{figure}[b!]
 	\centering
-%	    \vspace{-0.4cm}
 %	\includegraphics[width=0.42\textwidth]{images/memory_gd.png}
-	\includegraphics[width=0.77\linewidth]{images/memory_gd.png}
-%	\vspace{-0.5cm}
+	\includegraphics[width=\linewidth]{images/memory_gd.png}
 	\caption{Amount of memory used by \@approach and \textsc{CiD} when analyzing real-world Android apps.}
 	\label{fig:memory_gd}
-%	\vspace{-0.6cm}
 \end{figure}
 
 To better understand why \@approach performs more efficient than the state-of-the-art approaches, we conducted further performance evaluation, comparing the amount of

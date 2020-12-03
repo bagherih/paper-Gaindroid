@@ -1,27 +1,25 @@
-\begin{table}[h!]
+\begin{table*}[tb]
 \centering
 \caption{Three Types of Compatibility Issues in Android. \label{tab:api-mismatch}}
 %\footnotesize{
 %\small{
 %\scriptsize{
 %\tiny{
-\notsotiny{
-\begin{tabular*}{\linewidth}{l|c|c|c|c|l}
-    \hline
-    \hline    
+%\notsotiny{
+\begin{tabular}{l|c|c|c|c|l}
+    \toprule
     \multicolumn{1}{c}{}              &\multicolumn{1}{|c}{}    & \multicolumn{1}{|c}{}              & \multicolumn{1}{|c}{App}   & \multicolumn{1}{|c|}{Device}& \\
     \multicolumn{1}{c}{Mismatch type} &\multicolumn{1}{|c}{Abbr.}& \multicolumn{1}{|c}{Compatibility} & \multicolumn{1}{|c}{level} & \multicolumn{1}{|c|}{level} & Results in mismatch if... \\
-    \hline \hline
+    \toprule
     API invocation                    &API & Backward & \rlap{$\geq\alpha$}\phantom{$<23$} & \rlap{$<\alpha$}\phantom{$\geq23$}    &app invokes API method      \\
     {\it (App $\rightarrow$ Android)} &    & Forward  & \rlap{$<\alpha$}\phantom{$<23$}    & \rlap{$\geq\alpha$}\phantom{$\geq23$} &\mbox{}introduced/updated in $\alpha$ \\
-    \hline
+    \midrule
     API callback                      &APC & Backward & \rlap{$\geq\alpha$}\phantom{$<23$} & \rlap{$<\alpha$}\phantom{$\geq23$}    &app overrides API callback  \\
     {\it (Android $\rightarrow$ App)} &    & Forward  & \rlap{$<\alpha$}\phantom{$<23$}    & \rlap{$\geq\alpha$}\phantom{$\geq23$} &\mbox{}introduced/updated in $\alpha$ \\
-    \hline  
+    \midrule  
     Permission-                       &PRM & \multirow{ 2}{*}{Forward} & $\geq23$                           & $\geq23$                              &app misuses runtime \\
     induced                            &    &    & $<23$                              & $\geq23$                              &\mbox{}permission checking          \\ 
-    \hline
-    \hline
-\end{tabular*}
-}
-\end{table}
+    \bottomrule
+\end{tabular}
+%}
+\end{table*}
