@@ -92,26 +92,9 @@
 \maketitle
 
 \begin{abstract}
-With the ever-increasing popularity of mobile devices over
-the last decade, mobile applications and the frameworks upon
-which they are built frequently change, leading to a
-confusing jumble of devices and applications utilizing
-differing features even within the same framework. For
-Android apps and devices---the largest such framework and
-marketplace---mismatches between the version of the app API
-installed on a device and the version targeted by the
-developers of an app running on that device can lead to
-run-time crashes, providing a poor user experience. In this
-paper, we present \@approach, a new analysis approach that
-automatically detects all types of mismatches to which an
-app may be vulnerable across versions of the Android API it
-declaratively supports. 
-We applied \@approach to 3,590 real-world apps and compared the analysis results against the state-of-the-art techniques,
-which corroborates that \@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less false alarms.
-The experimental results also show that \@approach, which leverages a novel approach for gradually loading and analyzing classes as needed, %remarkably outperforms the existing techniques in terms of scalability.
-is remarkably (up to 8.3 times and 4 times on average) faster than the state-of-the art techniques.
-%We applied \@approach to 3,590 apps and compared the results of our analysis against state-of-the-art tools. The experimental results corroborate its ability to outperform the existing techniques in terms of both the number and type of mismatches correctly identified  as well as run-time performance of the analysis.  
-
+With the ever-increasing popularity of mobile devices over the last decade, mobile applications and the frameworks upon which they are built frequently change, leading to a confusing jumble of devices and applications utilizing differing features even within the same framework. For Android apps and devices—the largest such framework and marketplace— mismatches between the version of the app API installed on a device and the version targeted by the developers of an app running on that device can lead to run-time crashes, providing a poor user experience. 
+%In this paper, we present SAINTDroid, a new analysis approach that automatically detects various types of mismatches to which an app may be vulnerable across versions of the Android API it declaratively supports. 
+This paper presents SAINTDroid, a holistic compatibility analysis approach that seamlessly examines both the application code and the framework code by gradually loading and analyzing classes as needed during the compatibility analysis to enable efficient and scalable identification of various types of crash-leading Android compatibility issues. We applied SAINTDroid to 3,590 real-world apps and compared the analysis results against the state-of-the-art techniques, which corroborates that SAINTDroid is up to 76\% more successful in detecting compatibility issues while issuing significantly fewer false alarms. The experimental results also show that SAINTDroid is remarkably (up to 8.3 times and four times on average) faster than the state-of-the-art techniques.
 \end{abstract}
 
 %\keywords{Android compatibility, program analysis, software evolution}
