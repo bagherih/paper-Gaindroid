@@ -7,7 +7,7 @@
     \Comment{{\bf Input:} Method from call graph, decompiled APK}
     \If {\Call{IsApiOverride}{method}}
         \ForEachIn{lvl}{(app.minSdk..app.maxSdk)}
-            \If{$\neg$apidb.\Call{Contains}{method, lvl}}
+            \If{$\neg$\Call{ApiContains}{method, lvl}}
                 \State {mm $\gets$ mm $\cup$ \{method\}}
             \EndIf
         \EndFor

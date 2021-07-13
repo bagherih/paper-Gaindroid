@@ -7,7 +7,7 @@
  
 %This section reports the data we collected to empirically address the three research questions, their interpretations, and our results.
 
-%\vspace{-0.4cm} 
+%%\vspace{-0.4cm} 
 \subsection{RQ1: Accuracy}
 
 
@@ -60,18 +60,17 @@ outperforms the other three techniques in terms of both
 precision and recall.
 
 
-\textbf{Permission-induced Compatibility Issues (PRM).}
+\textbf{Permission Incompatibility Issues (PRM).}
 According to the experimental results, %shown in Table~\ref{tab:tab-results}, 
-\@approach detects two cases of permission-induced compatibility issues in
+\@approach detects two cases of permission incompatibility issues in
 \textit{FOSS Browser}~\cite{fossbrowser} and
 \textit{Kolab notes}~\cite{kolab} apps; these two apps
 request dangerous permissions and target an API level
-higher than 23, yet they do not follow the new runtime
+higher than 23, yet do not follow the new runtime
 permission checking. Note that the other mismatch
-detection techniques do not detect any of the runtime
-permission compatibility issues.  Next, we evaluate
-whether \@approach is sufficiently robust to handle
-large real-world apps.
+detection techniques do not detect any runtime
+permission compatibility issues.  
+%Next, we evaluate whether \@approach is sufficiently robust to handle large real-world apps.
 
 
 \subsection{RQ2: Real-World Applicability}
@@ -95,14 +94,9 @@ permissions revocation mismatches (cf.
 Section~\ref{sec-background:prm}).
 
 %\commentty{added text below.}
-Since manually examining all 3,691 real-world apps 
-prohibitively expensive, we sampled 60 apps where 
-incompatibilities were detected and calculated 
-the precision scores. We do not consider
-recall because the ground-truth incompatibilities
-are unknown. Among all 60 incompatibility issues,
-the precision scores for API invocation, callback, and permission
-incompatibilities are 85\%, 100\%, and 100\%, respectively. 
+Since manually examining all 3,571 real-world apps prohibitively expensive, we sampled 60 apps where incompatibilities were detected and calculated the precision scores via a manual analysis of the app code. 
+We do not consider recall because the ground-truth incompatibilities are unknown. 
+For those 60 apps, the precision scores for API invocation, callback, and permission incompatibilities are 85\%, 100\%, and 100\%, respectively. 
 The results are consistent with the ones obtained from the benchmark programs (cf. Table~\ref{tab:tab-results}). 
 
 %Because the apps in group (i) are more recent, they are
@@ -120,12 +114,13 @@ The results are consistent with the ones obtained from the benchmark programs (c
 %permissions such as READ\_CALENDAR, WRITE\_CALENDAR and
 %READ\_CONTACTS were not requested at all.
  
-We then investigated the \@approach's results to
-appraise its utility in practice. In the following, we
-report some of our findings. To avoid revealing previously
-unknown compatibility issues, we only disclose a subset of
-those that we have had the opportunity to bring to the app
-developers' attention.
+We then investigated \@approach's results to appraise its utility in practice. 
+In the following, we report an illustrative subset of the detected incompatibilities, each of which we have reported to the app's
+developers. 
+%To avoid revealing previously
+%unknown compatibility issues, we only disclose a subset of
+%those that we have had the opportunity to bring to the app
+%developers' attention.
 
 %\commentty{where are the results below from? I assume they are not from the 68,268 apps? We should clarify}
 
@@ -138,8 +133,8 @@ Calendar} app~\cite{offlinecalendar}, the invocation of the
 \textsf{PreferencesActivity.onCreate} causes an API
 invocation mismatch.  The \textsf{getFragmentManager()}
 method was added to the \textsf{Activity} class in API level
-11. Yet, \textsf{Offline Calendar} sets its
-\textsf{minSdkVersion} to API level 8. Therefore, as soon as
+11, but the app's
+\textsf{minSdkVersion} is API level 8. Therefore, if
 the \textsf{PreferencesActivity} is activated, the
 \textsf{Offline Calendar} app will crash if running on API
 levels 8 to 11. The mismatch could be resolved by wrapping
@@ -149,13 +144,13 @@ equal or greater than 11, or by setting the
 \textsf{minSdkVersion} to 11.
 %API callback -> be.digitalia.fosdem_1500150:
 
-\textbf{API callback mismatch.} FOSDEM~\cite{fosdem} is a
-conference companion app.  It exhibits an API callback
+\textbf{API callback mismatch.} FOSDEM~\cite{fosdem}, a
+conference companion app, exhibits an API callback
 mismatch in its \textsf{ForegroundLinearLayout} class, which
 overrides the \textsf{View.drawableHotspotChanged} callback
-method, introduced in API level 21. However, its
-\textsf{minSdkVersion} is set to API level 15, which would
-not support the aforementioned callback method, and in turn
+method introduced in API level 21. The app's
+\textsf{minSdkVersion} is API level 15, which would
+not support the aforementioned callback, and in turn
 may not properly propagate the new hotspot location to the
 \textsf{Drawable} stored as a member of the layout class.
 This could lead to crashes or other instability in the app
@@ -198,17 +193,17 @@ updating the app to use runtime permissions and setting the
 
 \begin{figure}[b]
     \centering
-    \vspace{-0.5cm}
+    %\vspace{-0.5cm}
     %\includegraphics[width=0.46\textwidth]{images/scatterplot.png}
     \includegraphics[width=0.8\linewidth]{images/scatterplot.png}
-    \vspace{-0.4cm}
+    %\vspace{-0.4cm}
     \caption{Scatter plot representing analysis time for compatibility checking of Android apps using \@approach.}
     \label{fig:scatterplot}
-%    \vspace{-0.7cm}
+%    %\vspace{-0.7cm}
 \end{figure}
 
 
-%\vspace{-7pt}
+%%\vspace{-7pt}
 \subsection{RQ3: Performance} % and Timing}
 
 Table~\ref{tab:tab-timing-results} shows the analysis
@@ -252,13 +247,13 @@ real-world usage.
 
 \begin{figure}[b!]
 	\centering
-%	    \vspace{-0.4cm}
+%	    %\vspace{-0.4cm}
 %	\includegraphics[width=0.42\textwidth]{images/memory_gd.png}
 	\includegraphics[width=0.77\linewidth]{images/memory_gd.png}
-%	\vspace{-0.5cm}
+%	%\vspace{-0.5cm}
 	\caption{Amount of memory used by \@approach and \textsc{CiD} when analyzing real-world Android apps.}
 	\label{fig:memory_gd}
-%	\vspace{-0.6cm}
+%	%\vspace{-0.6cm}
 \end{figure}
 
 To better understand why \@approach performs more efficient than the state-of-the-art approaches, we conducted further performance evaluation, comparing the amount of

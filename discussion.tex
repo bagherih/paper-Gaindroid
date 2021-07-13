@@ -1,9 +1,9 @@
-%\vspace{-0.1cm}
+%%\vspace{-0.1cm}
 \section{Discussion and Limitations}\label{sec-discussion}
-%\vspace{-0.1cm}
+%%\vspace{-0.1cm}
 
 
-By performing the analysis incrementally, \@approach's
+By incrementally analyzing reachable classes, \@approach's
 analysis cost is amortized over time.  
 %This also
 %results in shorter 
@@ -17,30 +17,20 @@ and perform incremental analysis is small,
 %memory to support analysis,
 substantially enhancing the
 scalability of our approach. 
-
 %Next we discuss 
 %This section discusses the limitations of \@approach. 
 Like any approach relying on static analysis, \@approach is subject
 to false positives. A promising avenue of future research is
 to complement \@approach with dynamic analysis techniques.
-Essentially, it should be possible to utilize dynamic
-analysis techniques to automatically verify
+Such techniques could automatically verify
 incompatibilities identified through our conservative,
 static analysis based, incompatibility detection technique,
 further alleviating the burden of manual analysis.
 
-As explained in Section~\ref{sec-results}, the majority of the
-false alarms are due to a limitation in \@approach regarding
-dynamically-generated classes (e.g., {\sf WebView\$1}) that
-correspond to anonymous inner class declarations.  When
-analyzing the code of each app, \@approach only explores the
-explicit classes defined in the app, ignoring the
-dynamically-generated classes. Thus, any callback or method
-defined inside an anonymous inner class is invisible to
-\@approach and is not included in the analysis. We plan to
-address this limitation in the future by including the
-dynamically-generated class definitions as well.
-
+The majority of the false positives given by \@approach are due to a technical limitation of our implementation regarding anonymous inner class declarations.  
+When analyzing the code of each app, the CLVM-based static analysis tool used by our implementation, \textsc{Jitana}, only explores the explicit classes defined in the app, ignoring the dynamically-generated classes created by the run-time for the anonymous declaration (e.g., WebView\$1). 
+Thus, any callback or method defined inside an anonymous inner class is invisible to our implementation and is not included in the analysis. 
+We plan to address this limitation in the future by extending \textsc{Jitana} to include dynamically-generated class definitions as well.
 
 \begin{comment}
 %\commentcs{

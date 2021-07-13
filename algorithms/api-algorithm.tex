@@ -8,7 +8,7 @@
 		\State{(minLvl,maxLvl) $\gets$ \Call{GetGuard}{block,minLvl,maxLvl}}
 		\ElsIf{\Call{IsApiCall}{block}}
 		\ForEachIn{lvl}{(minLvl..maxLvl)}
-		\If{$\neg$apidb.\Call{Contains}{block,lvl}}
+		\If{$\neg$\Call{ApiContains}{block,lvl}}
 		\State{mm $\gets$ mm $\cup$ \{block\}}
 		\EndIf
 		\EndFor

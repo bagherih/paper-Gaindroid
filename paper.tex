@@ -1,10 +1,10 @@
-\documentclass[10pt,conference]{IEEEtran}
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
 %\documentclass{llncs}
 %\documentclass[format=acmsmall]{acmart}
 %\documentclass[sigconf]{acmart}
 %\documentclass[sigconf,review, anonymous]{acmart}
 \usepackage[noend]{algpseudocode}
-\usepackage{standalone}
+%\usepackage{standalone}
 \usepackage{algorithm}
 \usepackage{graphicx}
 \usepackage{comment}
@@ -22,7 +22,7 @@
 \usepackage{multirow}
 \usepackage{threeparttable}
 \usepackage{subcaption}
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
 \usepackage{calc}
 \usepackage{pifont}
 \usepackage{soul}
@@ -74,23 +74,22 @@
 
 %\def \@atitle{{\normalsize GAIND}{\small ROID}}
 %\def \@approach{\textsc{GAINdroid}}
-\def \@atitle{{\normalsize SAINT}{\small DROID}}
-\def \@approach{\textsc{SAINTdroid}}
+\def \@atitle{{\normalsize AID}{\small -ROID}}
+\def \@approach{\textsc{AID-roid}}
 \def \apptotal {3,571}
-
-
-%\acmConference[ASE 2020]{the 35th IEEE/ACM Automated Software Engineering}{21--25 September, 2020}{Melbourne, Australia}
 
 \input{kotlin}
 
-\linespread{0.97}
+\linespread{0.98}
+\setlength{\textfloatsep}{2.0pt plus 2.0pt}
 
 \begin{document}
 
 %\title{\@approach: Automatic Detection of API-related Compatibility Issues in Android Applications}
 %\title{\@approach: General Automated Incompatibility Notifier for Android Applications}
 %\title{General Automated Incompatibility Detection for Android} 
-\title{SAINTDroid: Scalable, Automated Incompatibility Detection for Android} 
+%\title{SAINTDroid: Scalable, Automated Incompatibility Detection for Android}
+\title{AID-roid: Automated Incompatibility Detection for Android}
 %\title{Detecting and Mitigating Architectural Mismatch in Evolutionary Android Systems}
 
 \maketitle
@@ -110,8 +109,9 @@ paper, we present \@approach, a new analysis approach that
 automatically detects all types of mismatches to which an
 app may be vulnerable across versions of the Android API it
 declaratively supports. 
-We applied \@approach to 3,590 real-world apps and compared the results of our analysis against the state-of-the-art techniques,
-which corroborates that \@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms.
+We applied \@approach to 3,571 real-world apps and compared the results of our analysis against the state-of-the-art techniques,
+which corroborates that \@approach is up to 3 times more accurate (by $\text{F}_1$ score) than competing approaches.
+%which corroborates that \@approach is up to 76\% more successful in detecting compatibility issues, while issuing significantly less (11-52\%) false alarms.
 We also show that our approach, which gradually loads and analyzes classes as needed, remarkably outperforms the existing techniques in terms of scalability.
 %We applied \@approach to 3,590 apps and compared the results of our analysis against state-of-the-art tools. The experimental results corroborate its ability to outperform the existing techniques in terms of both the number and type of mismatches correctly identified  as well as run-time performance of the analysis.  
 

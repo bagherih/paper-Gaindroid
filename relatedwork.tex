@@ -1,5 +1,5 @@
 \section{Related Work}\label{sec-related}
-%\vspace{-0.1cm}
+%%\vspace{-0.1cm}
 %Android incompatibility issues have received a lot of
 %attention recently. Here, we provide a discussion of the
 %related efforts in light of our research.
@@ -154,9 +154,9 @@ issues (APC), and permission-induced compatibility issues
 %approaches.
 
 \begin{table}%{R}{0.40\textwidth}
-    %\vspace{-5ex}
+    %%\vspace{-5ex}
     \input{table_comparison_tools.tex}
-    \vspace{-0.5cm}
+    %\vspace{-0.5cm}
 \end{table}
 
 Wu et al.~\cite{wu2017measuring} investigated side
@@ -203,20 +203,16 @@ issues.
 Lint \cite{linttips} is a static analysis tool
 introduced in ADT (Android Development Tools) version
 16. One of the benefits of Lint is that the plugin is
-integrated with the Android Studio IDE, which is the
-default editor for Android development. The tool checks
-the source code to identify potential bugs such as
-layout performance issues, and accessing API calls that
+integrated with the Android Studio IDE. The tool checks
+the source code to identify potential bugs, including API calls that
 are not supported by the target API version. However,
 the tool generates false positives when verifying
 unsupported API calls (e.g., when an API call happens
 within a function triggered by a conditional
-statement). Another disadvantage is that it requires
-the availability of the original Java source code, and
-it does not analyze APKs.  In addition, \textsc{Lint}
-requires the project to be first built in the Android
+statement). Another disadvantage is that it requires the original Java source code, and 
+requires the project to be \emph{built} in the Android
 Studio IDE before conducting the analysis.  Unlike
-\textsc{Lint}, \@approach operates directly on Dex
+\textsc{Lint}, \@approach operates on Dex
 code. While \textsc{Lint} claims to be able to detect
 API incompatibility issues, our experimental results as
 well as the results obtained by Huang et al.  indicate
@@ -234,8 +230,8 @@ compatibility analysis upto the API level 25.  In
 comparison, \@approach offers automated extraction of the
 API database, and thereby supports up to the most recent
 Android platform (API level 29).  Moreover, in contrast to
-\@approach, \textsc{CiD} did not consider incompatibilities
-regarding the runtime permission system.
+\@approach, \textsc{CiD} does not consider permission-related incompatibilities.
+%regarding the runtime  system.
 
 Wei et al.~\cite{wei2016taming} conducted a study to
 characterize the symptoms and root causes of compatibility

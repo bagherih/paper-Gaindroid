@@ -35,7 +35,7 @@ This section presents the experimental evaluation of~\@approach.
 We have implemented \@approach's static analysis capability on top of the \textsc{Jitana} framework~\cite{tsutano2017efficient}, %\textsc{Jitana} is a high-performance hybrid analysis tool for Android. It works directly on Dalvik executable (dex) files contained in each APK.
 which is hybrid analysis tool for Android.
 We also used \textsc{APKTool} \cite{apktool} for %reverse engineering Android APK files and 
-extracting apps' manifest files.
+extracting apps' manifest files and PScout~\cite{au2012pscout} to map permission usage.
 As a result, our approach implementation only requires the availability of Android executable files, and not the original source code. \@approach, thus, can be used not only by developers, but also by end-users as well as third-party reviewers to assess the compatibility of their mobile apps.
 %, which enables our tool to work on non-open source applications whose APKs can be found online. We also need to decompile the APK file to extract the manifest file, and to that end we use \textsc{APKTool} \cite{apktool}. 
 %We further modified \textsc{Jitana} to decode dex files using Android version 6.0.0, which is the version in which the new runtime permissions system is introduced. We also extended \textsc{Jitana} to perform inter-procedural dataflow analysis, which enabled us to detect more API related issues within different methods of an Android app.
@@ -95,7 +95,7 @@ minimum levels ranging from 10 to 21 and targets
 ranging from level 23 to 27.  One of our baseline
 system, i.e. \textsc{Lint}, requires building the apps
 to perform the compatibility analysis. Out of the 27
-benchmark apps, eight apps cannot be built\footnote{The
+benchmark apps, eight apps would not build\footnote{The
 benchmark apps were built using Gradle~\cite{Gradle},
 which dropped support of some Android SDK tool chains.
 Even with the appropriate SDKs in place on two
@@ -111,12 +111,11 @@ To evaluate the implications of our tool in practice, we collected over 3,000 re
 %To further evaluate the applicability of our tool in practice, we collected a set of real-world Android apps from two repositories of FDroid~\cite{fdroid} and AndroZoo~\cite{allix2016androzoo}. 
 (1) FDroid~\cite{fdroid} is a software
 repository that contains free and open source Android
-apps.  Our collection of subject systems includes all
-\fdroidct\ apps available from the FDroid repository. 
+apps.  Our collection of subject systems includes 
+\fdroidct\ apps available from the FDroid repository (all available apps at the time of our query). 
 (2) We also include 2,300 apps from AndroZoo~\cite{allix2016androzoo}, a growing repository of Android apps
-collected from various sources, including the official Google Play store. We were
-unable to build 120 of the apps from AndroZoo so we
-excluded them from our analysis, leaving \apptotal~total apps.
+collected from various sources, including the official Google Play store. 
+We were unable to build 120 of the apps from AndroZoo (leaving them unavailable to \textsc{Lint}) so we excluded them from our analysis, leaving \apptotal~total apps.
 
 \subsection{Variables and Measures}
 
@@ -126,7 +125,6 @@ in our study to perform the analysis of compatibility issues.
 These techniques include {\sc CiD}~\cite{lili2018cid}, {\sc
 Cider}~\cite{huang2018understanding}, and
 \textsc{Lint}~\cite{linttips}.
-
 \textsc{CiD} represents a state-of-the-art in detecting
 Android compatibility issues. It has been publicly released,
 and we are able to obtain the tool and compile it in our
@@ -139,7 +137,6 @@ with the Android Development Tools (ADT), to examine
 code bases for potential bugs, including incompatible
 API usages.  \textsc{Lint} performs the compatibility
 analysis as part of building apps, and thus requires the app source code to conduct the analysis. We use \textsc{Lint} to answer RQ1 and RQ3.
-
 We also considered {\sc
 IctApiFinder}~\cite{he2018understanding} as a possible
 baseline technique. 
@@ -159,7 +156,8 @@ study.
 %metrics allowing us to answer each of our three research
 %questions.
 To measure accuracy, we compare the number of detected compatibility issues with known issues as reported by prior work~\cite{huang2018understanding,lili2018cid}. For each analysis technique, we report true and false positives and false
-negatives thereof in detecting compatibility issues of the apps under analysis. Lastly, we report precision, recall and F-measure for each technique.
+negatives in detecting compatibility issues of the apps under analysis. 
+We report precision, recall and F-measure ($\text{F}_1$ score) for each technique.
 %We then report true (\tp) and false (\fp) positives and false negatives (\fn) based on comparisons to results from baseline techniques. Lastly, we report precision, recall and F-measure.
 To measure applicability, we report the number of detected
 compatibility issues in real-world apps. Finally, to measure
@@ -195,23 +193,21 @@ involves the object programs. We have studied a smaller set of benchmark program
 developed and released by prior research~\cite{lili2018cid,huang2018understanding} so that
 we can directly compare our results with their
 previously reported results.  However, we also extend
-our evaluation to employ over 3,590 complex real-world apps from
-other repositories, which in turn enabled us to assess our system in
+our evaluation to employ over 3,500 complex real-world apps from
+other repositories, enabling us to assess our system in
 real-world scenarios, representative of those that
 engineers and analysts are facing.
-
-The primary threat to internal validity involves
-potential errors in the implementations of \@approach
+Our internal validity relies on the correctness of our implementation
 and the infrastructure used to run \textsc{CiD} and
-\@approach.  To limit these, we extensively validated
+\@approach.  We extensively validated
 all of our tool components and scripts to ensure
 correctness.  By using the same objects as our baseline
 systems we can compare our results with those previously reported to ensure correctness.
-
+\begin{comment}
 The primary threat to construct validity relates to the
 fact that we study efficiency measures relative to
 applications of \@approach, but do not yet assess
 whether the approach helps software engineers or
 analysts addresses dependability and security concerns
 more quickly than current approaches.
-%\end{comment}
+\end{comment}

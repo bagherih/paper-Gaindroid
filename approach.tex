@@ -19,10 +19,10 @@
 \begin{figure}[t!]
     \centering
     \includegraphics[width=\linewidth]{images/differences.pdf}
-    \vspace{-0.2cm}
+    %\vspace{-0.2cm}
     \caption{Comparing Existing Approaches with \@approach}
     \label{fig:compare}
-    \vspace{-0.3cm}
+    %\vspace{-0.3cm}
 \end{figure}
 \end{comment}
 
@@ -31,42 +31,25 @@
 
 %In a nutshell, \@approach utilizes a \emph{ClassLoader Virtual Machine} (\emph{CLVM}) to perform class-based reachability analysis~\cite{tsutano2017efficient}. \emph{CLVM} takes advantage of code structure in Java to locate and load classes that can be reachable within a program.  As an example, if an application method calls an Android API, the class to which the API belongs would be loaded.  By utilizing CLVM, \@approach, as shown in Figure~\ref{fig:compare}b, analyzes the application classes and only the reachable ADF classes, and not the entire ADF code. This analysis approach blurs the line that separates application and ADF code and significantly reduces both peak memory footprint and memory consumption over time (as will be shown later). Currently, \@approach can only analyze Dex code; it does not support the loading and analysis of native code.  
 
-This section overviews our approach, 
-to automatically detect all three types
-of API- and permission-induced mismatches described in
-Table~\ref{tab:api-mismatch}. As depicted in
-Figure~\ref{fig:arch}, \@approach takes as input an app
-APK\footnote{APK is an app bytecode package used to
-distribute and install an Android application.} along
-with a set of Android framework versions, and produces
-a list of mismatches for the given Android app.  
-\@approach comprises three main components:
-(1) The \textit{API usage modeler (AUM)} that utilizes
-different static analysis techniques, i.e., control
-flow and data flow analyses, to  identify the API call
-sites and the concomitant conditions thereof; 
-(2) The \textit{Android revision modeler (ARM)} that
-extracts essential information about the framework
-APIs' lifetime and mappings between Android API calls
-and the permissions required to perform those calls
-from the Android framework revision history;
-(3) The \textit{Android mismatch detector (AMD)} that
-leverages the artifacts produced by AUM and ARM
-components to effectively detect API- and
-permission-related mismatches in the app under
-analysis.
-
+This section overviews our approach to automatically detect all three types of API- and permission-induced mismatches. 
+As depicted in Figure~\ref{fig:arch}, \@approach takes as input an app APK\footnote{APK is package containing byte code and other resources used to distribute and install an Android application.} along with a set of Android framework versions, and produces a list of mismatches for the given Android app.  
+\@approach comprises two main components:
+\begin{enumerate*}[label=(\arabic*)]
+    \item The \textit{API usage modeler (AUM)} that utilizes different static analysis techniques, i.e., control flow and data flow analyses, to  identify the API call sites and the concomitant conditions thereof; and
+    %\item The \textit{Android revision modeler (ARM)} that extracts essential information about the framework APIs' lifetime and mappings between Android API calls and the permissions required to perform those calls from the Android framework revision history;
+    \item The \textit{Android mismatch detector (AMD)} leverages the artifacts produced by AUM to effectively detect API- and permission-related mismatches in the app under analysis.
+\end{enumerate*}
 %Next, we describe the details of each component in turn.
  
 
 \begin{figure}[t!]
     \centering
-%    \vspace{0.2cm}
-    \includegraphics[width=\linewidth]{images/Approach.png}
-    \vspace{-0.2cm}    
+%    %\vspace{0.2cm}
+    \includegraphics[width=0.8\linewidth]{images/Approach.png}
+    %\vspace{-0.2cm}    
     \caption{Architecture of \@approach}
     \label{fig:arch}
-    \vspace{-0.6cm}
+    %\vspace{-0.6cm}
 \end{figure}
 
 \subsection{AUM: API Usage Modeler}
@@ -86,7 +69,7 @@ annotated API calls or permission-required functionalities.
 
 \@approach's compatibility analysis has three major
 advantages over the state-of-the-art approaches.
-First,  to render our analysis more \emph{effective,
+(1) To render our analysis more \emph{effective,
 efficient, and scalable}, \@approach's AUM module
 employs a novel class-loader based approach that incrementally discovers
 pertinent application and ADF classes via reachability
@@ -99,43 +82,37 @@ reachability analysis~\cite{tsutano2017efficient}.
 to locate and load classes that can be reachable within
 a program.  As a concrete example, if an application method
 calls an Android API, the class to which the API
-belongs would be loaded.  By utilizing CLVM, \@approach analyzes the application classes along with reachable ADF classes, rather than analyzing the entire ADF code. This analysis approach
-blurs the line that separates application and ADF code and
-significantly reduces both peak memory footprint and
-memory consumption over time.
-This, in turn, allows our technique
+belongs would be loaded.  By utilizing CLVM, \@approach analyzes the application classes along with \emph{reachable} ADF classes, rather than analyzing the entire ADF codebase. 
+%This analysis approach blurs the line that separates application and ADF code and significantly reduces both peak memory footprint and memory consumption over time.
+This reduces both peak memory footprint and memory consumption over time, allowing \@approach
 to be significantly faster and more space efficient
-than the state-of-the-art in compatibility analysis,
-without sacrificing its capability in detecting
+than the state-of-the-art in compatibility analysis.
+The benefit comes without sacrificing the capability to detect
 compatibility issues, as evidenced by the experimental
 results (cf.  Section~\ref{sec-eval}).  
 Some existing
 state-of-the-art
 techniques~\cite{huang2018understanding,he2018understanding},
 on the other hand, directly load the entire code base
-into memory, and thereby facing difficulties in
-handling large scale libraries such as ADF. 
-
+into memory, and thereby face scalability issues. 
 %---\@approach's AUM module incrementally loads and analyzes
 %classes 
-
-Second, the AUM module analyzes actual ADF code to detect
+(2) The AUM module analyzes actual ADF code to detect
 \emph{more instances and types of compatibility issues}.
 Prior work, on the other hand, focuses on creating models of
 the ADF to only identify API callback compatibility
-issues~\cite{huang2018understanding}.  Third, while prior
-work by and large focuses on the first level framework API
-calls, i.e., the first call to the framework from an
-app~\cite{lili2018cid}, the AUM module analyzes method calls
-beyond that initial level, which, once again, empowers
+issues~\cite{huang2018understanding}.  
+(3) While prior
+work tends to analyze only the first call to the framework from an
+app on each control flow path~\cite{lili2018cid}, the AUM module analyzes \emph{all} API calls and callbacks, which empowers
 \@approach to detect \emph{more instances and types of
 incompatibility issues}. 
 
+\begin{comment}
 Another key feature in Android that can affect the accuracy
 of the compatibility analysis is late binding.  Indeed, apps
 may dynamically load code that is not included in the main
-dex file\footnote{A dex file is an executable file that
-incorporates compiled code written for Android.} of the
+dex file\footnote{A dex file incorporates compiled code which can be executed by an Android runtime.} of the
 original application package, initially loaded at the
 installation time.  This mechanism enables an app to be
 extended with new desirable features at run-time. However,
@@ -146,28 +123,33 @@ To avoid missing any potential compatibility-related
 issues that may result in crashes at run-time,
 \@approach takes a conservative approach and considers
 all possible bindings that can be statically
-discovered.  More precisely, \@approach's AUM component
+discovered.  More precisely, 
+\end{comment}
+
+Additionally, \@approach's AUM component
 examines not only the main app code loaded at the
 installation time, but also any other code accessible
-from the app package that can be binded at run-time.
+from the app package that could be \emph{late bound}, or dynamically loaded, at run-time.
 AUM incrementally augments the control-flow and
 data-flow graphs by recursively identifying and
-examining such to-be dynamically loaded classes to
-ensure that every method in every such classes is
-analyzed.  Note that such to-be dynamically loaded code
-may not always be statically analyzable, especially
-when it is not bundled within installed packages, and
-rather externally loaded from remote servers.
+examining any classes which could be dynamically loaded by an app to
+ensure that every method in every such class is
+analyzed.\footnote{As one caveat, \@approach, as with any static analysis tool, cannot analyze classes dynamically loaded from remote servers.}
+%Note that such to-be dynamically loaded code
+%may not always be statically analyzable, especially
+%when it is not bundled within installed packages, and
+%rather externally loaded from remote servers.
   
   
 
 \begin{figure}[t!]%{R}{0.66\textwidth}
 %    \begin{minipage}{8cm}
         \input{algorithms/api-algorithm}
-        \vspace{-0.6cm}
+        %\vspace{-0.6cm}
 %    \end{minipage}
 \end{figure}
 
+\begin{comment}
 \subsection{ARM: Android Revision Modeler} 
 
 The ARM module derives both the API lifecycle and the permission mapping models through mining of the Android framework revision history.
@@ -183,28 +165,28 @@ The Android revision modeling component to derive the lifetime of each framework
 
   
 
- 
+\end{comment} 
  
 \subsection{AMD: Android Mismatch Detector} 
 \label{mismatchdetection}
 
 The AMD module analyzes the artifacts
-produced by the other modules shown in Figure \ref{fig:arch} to identify both
-API-related mismatches ({\it API Mismatch Detector}) and permissions-related
+produced by the AUM to identify
+API-related invocation and callback mismatches ({\it API Mismatch Detector}) and permissions-related
 mismatches ({\it Permissions Mismatch
 Detector}).
 %\subsubsection{API Mismatch Detector}\label{subsec-permission-identification}
-The \textit{Mismatch Detection} component first checks for API compatibility issues (cf.
-Section~\ref{API Compatibility Issues}), using the following process to spot both
-API invocation and callback mismatches:
+%The \textit{Mismatch Detection} component first checks for API compatibility issues (cf.
+%Section~\ref{API Compatibility Issues}), using the following process to spot both
+%API invocation and callback mismatches:
  
 
 
 \begin{figure}[t]
 %    \begin{minipage}{8cm}
-%        \vspace{-1cm}
+%        %\vspace{-1cm}
         \input{algorithms/apc-algorithm}
-        \vspace{-3ex}
+        %\vspace{-3ex}
 %    \end{minipage}
 \end{figure}
 
@@ -218,10 +200,10 @@ graph generated by static analysis of the app. If the
 current block represents a guard condition (line 2), the
 range of supported API levels is filtered by extracting the
 minimum and maximum range from the guard and
-updating the minimum and maximum supported levels (line 3).
+updating the supported levels (line 3).
 If the current block is a call to an API method (line 4),
-query the API database at each supported level to determine
-whether the method called in the current block is defined
+check each supported API level to determine
+whether the method called in the current block is defined in that level
 (line 5-6).  In case that it is not defined, add the current
 block to the set of mismatches (line 7).
 %
@@ -251,8 +233,8 @@ of each guard condition (lines 10-11).
 %algorithm as a DFS worklist. However, you will need to
 %verify whether this is true.}
 %
-\@approach can reliably detect Invocation mismatches because
-the API Usage Extraction component performs path-sensitive,
+\@approach can reliably detect invocation mismatches because
+the AUM component performs path-sensitive,
 context-aware, and inter-procedural data-flow analysis,
 which accounts for guard conditions on the
 supported versions across methods, unlike other
@@ -263,39 +245,36 @@ CiD}.
 
 \begin{figure}[t!]%{R}{0.66\textwidth}
 %    \begin{minipage}{8cm}
-        %\vspace{-5ex}
+        %%\vspace{-5ex}
         \input{algorithms/permissions-mismatch}
-%        \vspace{-1cm}
+%        %\vspace{-1cm}
 %    \end{minipage}
 \end{figure}
 
 \textit{Callback mismatch:} %For each method in the call graph, the detector executes Algorithm~\ref{alg:apc-mismatch}. 
 The detector uses the algorithm in Fig.~\ref{alg:apc-mismatch} to detect API callback mismatches in each method within the call graph derived from the app under analysis.
 If the method overrides an API callback
-(line 2), iterate over the API levels that the app declares to support and query
-the API database---automatically generated by the Database Construction
-component---to determine whether the callback is defined within the entire range
+(line 2), iterate over the API levels that the app declares to support and check whether the callback is defined within the entire range
 of supported API levels (lines 4-5). This sets our approach apart from prior
 research, such as {\sc Cider}~\cite{wu2017measuring}, through
 \emph{automatically} detecting incompatible API callbacks without requiring any
 manual effort of compiling a list of candidate callbacks beforehand, thereby
-making it widely applicable and practical for use by many.
+making it widely applicable and practical.
 
 
 
 
 
-The second part of the \textit{Mismatch Detection} component detects
+The second internal component of the AMD detects
 incompatibilities surrounding the new runtime permissions system introduced in
-API level 23, a capability unique to our approach. %(outlined in Algorithm~\ref{alg:permissions-mismatch}).
+API level 23, a capability unique to \@approach. %(outlined in Algorithm~\ref{alg:permissions-mismatch}).
 The logic of the algorithm in Fig.~\ref{alg:prm-mismatch} that checks permission-induced compatibility issues is as follows:
 First, extract dangerous permissions from the app's manifest (line 2).  
 %If there are no
 %dangerous permissions there is no risk of permission mismatches,
 %as normal permissions are automatically granted (lines 3-4).  
 In case the app
-requests dangerous permissions, retrieve the call graph from the \textit{API Usage
-Extraction} component (line 5), and check whether each method of the app that
+requests dangerous permissions, retrieve the call graph from the AUM component (line 5), and check whether each method of the app that
 targets API level 23 or newer overrides {\sf onRequestPermissionsResult} (lines
 6-8). In case the app does implement the new runtime permission system, there
 is again no risk of mismatch (line 9).  If the app either does \emph{not} implement
